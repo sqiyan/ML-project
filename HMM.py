@@ -17,14 +17,25 @@ class HMM_script():
         elif args == "C":
             self.path = "CN"
         elif args == "S":
-            self.path = "SN"
+            self.path = "SG"
         else:
             self.path = "EN"
         self.open_file()
 
     def open_file(self):
-        self.train_data = np.genfromtxt(self.path + "/train",delimiter=" ",dtype = str, encoding="utf-8", invalid_raise = False)
-        self.test_data = np.genfromtxt(self.path + "/dev.in",delimiter=" ",dtype = str, encoding="utf-8", invalid_raise = False)
+        g = open(self.path+"/train", encoding="utf-8")
+        test_data_list = g.read().splitlines()
+        test_data_list_formatted = []
+        for line in test_data_list:
+            entries = line.split()
+            test_data_list_formatted.append(np.array(entries, dtype=str))
+        self.train_data = np.array(test_data_list_formatted)
+        g.close()
+        
+        f = open(self.path+"/dev.in", encoding="utf-8")
+        test_data_list = f.read().splitlines()
+        self.test_data = np.array(test_data_list)
+        f.close()
 
     def est_emission_params(self):
         y_vals = self.train_data[:,1]
@@ -68,14 +79,19 @@ class HMM_script():
 
     def evaluate_ymax(self):
         self.ymax_given_x()
-        f = open(self.path + "/dev.p2.out","w")
+        f = open(self.path + "/dev.p2.out","w", encoding="utf-8")
         for x in self.test_data:
-            try:
-                y = self.y_max_given_x[x]
-            except:
-                y = self.y_max_given_x["#UNK#"]
-            f.write("{} {}\n".format(x,y))
+            if len(x)<1:
+                f.write("\n")
+            else:
+                try:
+                    y = self.y_max_given_x[x]
+                    f.write("{} {}\n".format(x,y))
+                except:
+                    y = self.y_max_given_x["#UNK#"]
+                    f.write("{} {}\n".format(x,y))
         f.close()
+        # print(len(self.test_data))
 
 
 
@@ -83,3 +99,4 @@ class HMM_script():
 hmm = HMM_script(args)
 hmm.evaluate_ymax()
 # print(hmm.test_data)
+# print(hmm.train_data)
