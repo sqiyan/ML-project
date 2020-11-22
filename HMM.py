@@ -20,13 +20,37 @@ class HMM_script():
             self.path = "SN"
         else:
             self.path = "EN"
-        print(self.path)
+        self.open_file()
 
     def open_file(self):
         self.data = np.genfromtxt(self.path + "/train",delimiter=" ",dtype = str)
-        print(self.data)
-        print(self.path + "/train")
+        # print(self.data)
+        # print(self.path + "/train")
+
+    def est_transition_params(self):
+        y_vals = self.data[:,1]
+        count_y = {}
+        count_y_to_x = {}
+        self.e_x_given_y = {}
+        for i in range(self.data.shape[0]):
+            transition = self.data[i,:]
+            transition = tuple(transition)
+            if transition not in count_y_to_x:
+                count_y_to_x[transition] = 1
+            else:
+                count_y_to_x[transition] += 1
+        
+        for entry in y_vals:
+            if entry not in(count_y):
+                count_y[entry] = 1
+            else:
+                count_y[entry] +=1
+
+        for entry, count in count_y_to_x.items():
+            self.e_x_given_y[entry] = count/count_y[entry[1]]
+
+        print(self.e_x_given_y)
 
 
 hmm = HMM_script(args)
-hmm.open_file()
+hmm.est_transition_params()
