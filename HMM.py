@@ -28,17 +28,25 @@ class HMM_script():
         test_data_list_formatted = []
         for line in test_data_list:
             entries = line.split()
-            test_data_list_formatted.append(np.array(entries, dtype=str))
+            if len(entries)==1:
+                entries.append("")
+            elif len(entries)==0:
+                entries.append("")
+                entries.append("")
+            test_data_list_formatted.append(entries)
+            # test_data_list_formatted.append(np.array(entries, dtype=str))
+        # self.train_data = np.array(test_data_list_formatted)
         self.train_data = np.array(test_data_list_formatted)
         g.close()
         
+
         f = open(self.path+"/dev.in", encoding="utf-8")
         test_data_list = f.read().splitlines()
         self.test_data = np.array(test_data_list)
         f.close()
 
     def est_emission_params(self):
-        y_vals = self.train_data[:,1]
+        self.y_vals = self.train_data[:,1]
         count_y = {}
         count_y_to_x = {}
         self.e_x_given_y = {}
@@ -50,7 +58,7 @@ class HMM_script():
             else:
                 count_y_to_x[transition] += 1
         
-        for entry in y_vals:
+        for entry in self.y_vals:
             if entry not in(count_y):
                 count_y[entry] = 1
             else:
@@ -100,44 +108,65 @@ class HMM_script():
     # count(u) Number of times we see the state u in the training set
 
     def est_transition_params(self):
-        # y_vals = self.train_data[:,1]
+        self.est_emission_params()
+        y_vals = self.train_data[:,1]
         count_y = {}
         count_y0_to_y1 = {}
-        previous_state = ""
+        previous_state = None
         self.p_y1_given_y0 = {}
         # result = str.split('\n\n')
         # result = result[:-1]
         
         # for entry in result: 
         for line in self.train_data:
-            if previous_state == "": #assume empty line is in train data - TO REVIEW
+            if previous_state == None: #assume empty line is in train data - TO REVIEW
                 previous_state = "START"
-                state = line.split()[1]
+                state = line[1]
                 transition = (previous_state, state)
                 count_y0_to_y1[(transition)] = count_y[(transition)] + 1 if transition in count_y else 1
                 count_y["START"] = count_y["START"] + 1 if "START" in count_y else 1
 
-            elif len(line) == 0:
+            elif line[1] == "":
                 state = "STOP"
                 transition = (previous_state, state)
                 count_y0_to_y1[(transition)] = count_y[(transition)] + 1 if transition in count_y else 1
-                previous_state = ""
+                previous_state = None
 
             else:
-                state = line.split()[1]
+                state = line[1]
                 transition = (previous_state, state)
                 count_y0_to_y1[(transition)] = count_y[(transition)] + 1 if transition in count_y else 1
                 count_y[state] = count_y[state] + 1 if state in count_y else 1
-                previous_state == state
+                previous_state = state
 
-        # for entry in y_vals:
-        #     if entry not in(count_y):
-        #         count_y[entry] = 1
-        #     else:
-        #         count_y[entry] +=1
+        y_previous_state = None
+        for entry in y_vals:
+            if previous_state == None:
+                entry = "START"
+                if entry not in(count_y):
+                    count_y[entry] = 1
+                else:
+                    count_y[entry] +=1
+                previous_state = entry
+            elif entry == "":
+                entry = "STOP"
+                if entry not in(count_y):
+                    count_y[entry] = 1
+                else:
+                    count_y[entry] +=1
+                previous_state = entry
+            else:
+                if entry not in(count_y):
+                    count_y[entry] = 1
+                else:
+                    count_y[entry] +=1
+                previous_state = entry
 
         for entry, count in count_y0_to_y1.items():
-            self.p_y1_given_y0[entry] = count/count_y[entry[0]]
+            try:
+                self.p_y1_given_y0[entry] = count/count_y[entry[1]]
+            except:
+                self.p_y1_given_y0[entry] = count/count_y[entry[1]]
 
         return self.p_y1_given_y0
 
@@ -145,7 +174,8 @@ class HMM_script():
 
 
 hmm = HMM_script(args)
-hmm.evaluate_ymax()
+# hmm.evaluate_ymax()
+print(hmm.est_transition_params())
 # print(hmm.test_data)
 # print(hmm.train_data)
 # hmm.est_transition_params()
