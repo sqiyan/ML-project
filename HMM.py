@@ -23,11 +23,9 @@ class HMM_script():
         self.open_file()
 
     def open_file(self):
-        self.data = np.genfromtxt(self.path + "/train",delimiter=" ",dtype = str)
-        # print(self.data)
-        # print(self.path + "/train")
+        self.data = np.genfromtxt(self.path + "/train",delimiter=" ",dtype = str, encoding="utf-8", invalid_raise = False)
 
-    def est_transition_params(self):
+    def est_emission_params(self):
         y_vals = self.data[:,1]
         count_y = {}
         count_y_to_x = {}
@@ -49,8 +47,11 @@ class HMM_script():
         for entry, count in count_y_to_x.items():
             self.e_x_given_y[entry] = count/count_y[entry[1]]
 
+        for entry, count in count_y.items():
+            self.e_x_given_y[("#UNK#",entry)] = 0.5/(count+0.5)
+
         print(self.e_x_given_y)
 
 
 hmm = HMM_script(args)
-hmm.est_transition_params()
+hmm.est_emission_params()
