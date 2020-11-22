@@ -67,13 +67,19 @@ class HMM_script():
         
 
     def evaluate_ymax(self):
-        self.y_max_given_x()
-        # f = open(self.path + "/dev.p2.out","w")
-        #     f.write("{} {}\n".format(x,y))
-        # f.close()
+        self.ymax_given_x()
+        f = open(self.path + "/dev.p2.out","w")
+        for x in self.test_data:
+            try:
+                y = self.y_max_given_x[x]
+            except:
+                y = self.y_max_given_x["#UNK#"]
+            f.write("{} {}\n".format(x,y))
+        f.close()
 
 
 
 
 hmm = HMM_script(args)
-hmm.ymax_given_x()
+hmm.evaluate_ymax()
+# print(hmm.test_data)
