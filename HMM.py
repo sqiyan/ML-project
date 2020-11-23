@@ -119,54 +119,54 @@ class HMM_script():
         
         # for entry in result: 
         for line in self.train_data:
-            if previous_state == None: #assume empty line is in train data - TO REVIEW
+            if previous_state == None: 
                 previous_state = "START"
                 state = line[1]
                 transition = (previous_state, state)
-                count_y0_to_y1[(transition)] = count_y[(transition)] + 1 if transition in count_y else 1
+                count_y0_to_y1[(transition)] = count_y0_to_y1[(transition)] + 1 if transition in count_y0_to_y1 else 1
                 count_y["START"] = count_y["START"] + 1 if "START" in count_y else 1
 
             elif line[1] == "":
                 state = "STOP"
                 transition = (previous_state, state)
-                count_y0_to_y1[(transition)] = count_y[(transition)] + 1 if transition in count_y else 1
+                count_y0_to_y1[(transition)] = count_y0_to_y1[(transition)] + 1 if transition in count_y0_to_y1 else 1
                 previous_state = None
 
             else:
                 state = line[1]
                 transition = (previous_state, state)
-                count_y0_to_y1[(transition)] = count_y[(transition)] + 1 if transition in count_y else 1
+                count_y0_to_y1[(transition)] = count_y0_to_y1[(transition)] + 1 if transition in count_y0_to_y1 else 1
                 count_y[state] = count_y[state] + 1 if state in count_y else 1
                 previous_state = state
 
-        y_previous_state = None
-        for entry in y_vals:
-            if previous_state == None:
-                entry = "START"
-                if entry not in(count_y):
-                    count_y[entry] = 1
-                else:
-                    count_y[entry] +=1
-                previous_state = entry
-            elif entry == "":
-                entry = "STOP"
-                if entry not in(count_y):
-                    count_y[entry] = 1
-                else:
-                    count_y[entry] +=1
-                previous_state = entry
-            else:
-                if entry not in(count_y):
-                    count_y[entry] = 1
-                else:
-                    count_y[entry] +=1
-                previous_state = entry
+        # y_previous_state = None
+        # for entry in y_vals:
+        #     if previous_state == None:
+        #         entry = "START"
+        #         if entry not in(count_y):
+        #             count_y[entry] = 1
+        #         else:
+        #             count_y[entry] +=1
+        #         previous_state = entry
+        #     elif entry == "":
+        #         entry = "STOP"
+        #         if entry not in(count_y):
+        #             count_y[entry] = 1
+        #         else:
+        #             count_y[entry] +=1
+        #         previous_state = entry
+        #     else:
+        #         if entry not in(count_y):
+        #             count_y[entry] = 1
+        #         else:
+        #             count_y[entry] +=1
+        #         previous_state = entry
 
         for entry, count in count_y0_to_y1.items():
             try:
-                self.p_y1_given_y0[entry] = count/count_y[entry[1]]
+                self.p_y1_given_y0[entry] = count/count_y[entry[0]]
             except:
-                self.p_y1_given_y0[entry] = count/count_y[entry[1]]
+                self.p_y1_given_y0[entry] = count/count_y[entry[0]]
 
         return self.p_y1_given_y0
 
