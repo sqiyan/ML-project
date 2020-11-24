@@ -170,6 +170,14 @@ class HMM_script():
 
         return self.p_y1_given_y0
 
+    # Use the estimated transition and emission parameters, implement the Viterbi algorithm
+    # Report the precision, recall and F scores of all systems
+
+    # TODO - implement dictionary to store max and argmax values
+    # TODO - write code to update most probable transmission and emission sequence for given sentence
+
+
+
 
 
 
