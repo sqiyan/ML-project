@@ -1127,7 +1127,7 @@ marked B-VP
 improvement I-NP
 from B-PP
 the B-NP
-# B-UCP
+# B-ADJP
 2 B-LST
 billion I-NP
 -LRB- O
@@ -1950,7 +1950,7 @@ unit I-NP
 , O
 will B-VP
 pay I-VP
-# B-UCP
+# B-ADJP
 43.5 I-NP
 million I-NP
 -LRB- O
@@ -9313,7 +9313,7 @@ which B-NP
 last I-ADVP
 month I-NP
 paid I-VP
-# B-UCP
+# B-ADJP
 50.7 B-UCP
 million I-NP
 for B-PP
@@ -19898,7 +19898,7 @@ their B-NP
 trading I-NP
 profit I-NP
 at B-PP
-# B-UCP
+# B-ADJP
 30 I-NP
 million I-NP
 . O

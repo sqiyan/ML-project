@@ -170,10 +170,10 @@
 信仰 B-positive
 。 O
 
-# I-negative
+# B-positive
 青云 I-positive
 志 I-positive
-# I-negative
+# B-positive
 一直 O
 都 O
 在 O
@@ -288,7 +288,7 @@ RVbpRfJ O
 发布 O
 了 O
 头条 B-neutral
-文章 B-neutral
+文章 O
 ： O
 《 B-positive
 范冰冰 B-positive
@@ -565,12 +565,12 @@ f O
 llk I-negative
 11hvhfgvv I-negative
 
-# I-negative
+# B-positive
 一场 O
 未知 O
 的 I-negative
 旅行 I-neutral
-# I-negative
+# B-positive
 [ O
 哈哈 O
 ] O
@@ -583,11 +583,11 @@ llk I-negative
 土耳其 B-neutral
 】 O
 的 I-negative
-# I-negative
+# B-positive
 蚂蜂 I-negative
 窝 O
 游记 I-negative
-# I-negative
+# B-positive
 - I-neutral
 - I-neutral
 - I-neutral
@@ -852,11 +852,11 @@ http://t.cn/Rqd7c0Q I-negative
 动动手 O
 指头 O
 在 O
-# I-negative
+# B-positive
 亚洲 I-neutral
 新歌 I-neutral
 榜 I-neutral
-# I-negative
+# B-positive
 为 O
 @ B-positive
 TFBOYS I-neutral
@@ -931,13 +931,13 @@ RVt9x63 O
 球球 I-neutral
 大 I-positive
 作战 I-positive
-# I-negative
+# B-positive
 带 O
 着 O
 球球 I-neutral
 去 I-negative
 旅行 I-neutral
-# I-negative
+# B-positive
 http O
 : O
 / O
@@ -1213,11 +1213,11 @@ my O
 林俊杰 B-negative
 已经 O
 在 O
-# I-negative
+# B-positive
 明星 I-neutral
 势力 I-neutral
 榜 I-neutral
-# I-negative
+# B-positive
 港澳台 O
 榜上 O
 为 O
@@ -1370,9 +1370,9 @@ http://t.cn/RVtTfZD I-negative
 胜 O
 。 O
 来 B-negative
-# I-negative
+# B-positive
 最佳阵容 O
-# I-negative
+# B-positive
 一起 O
 猜 O
 比分 O
@@ -1490,11 +1490,11 @@ psd I-negative
 我 B-negative
 在 O
 为 O
-# I-negative
+# B-positive
 叮咯咙 O
 咚 O
 呛 O
-# I-negative
+# B-positive
 @ B-positive
 霍尊 I-positive
 加油 O
@@ -1522,14 +1522,14 @@ psd I-negative
 ！ O
 http://t.cn/RcDQrs7 I-negative
 
-# I-negative
+# B-positive
 微博 B-neutral
 橱窗 O
-## I-negative
+## B-positive
 全网 I-negative
 诚信通 I-negative
 官方 O
-# I-negative
+# B-positive
 厂家直销 O
 LED I-neutral
 电子 O
@@ -1705,7 +1705,7 @@ essay I-negative
 号 I-neutral
 发了 O
 一篇 O
-文章 B-neutral
+文章 O
 ） O
 http://t.cn/RVtThY7 I-negative
 
@@ -1721,10 +1721,10 @@ http://t.cn/RVtThY7 I-negative
 投稿 O
 投稿 O
 
-# I-negative
+# B-positive
 爱享 I-positive
 蜜月旅行 I-positive
-# I-negative
+# B-positive
 浪漫 B-positive
 来袭 O
 ( O
@@ -1740,7 +1740,7 @@ http://t.cn/RVtThY7 I-negative
 抽到 O
 了 O
 @ B-positive
-疯狂 B-positive
+疯狂 I-neutral
 婚礼 I-neutral
 季 I-positive
 的 I-negative
@@ -1763,11 +1763,11 @@ http://t.cn/RVtThY7 I-negative
 ？ O
 http://t.cn/RVqKaUk O
 
-# I-negative
+# B-positive
 哔哩 I-negative
 哔哩 I-negative
 动画 I-neutral
-# I-negative
+# B-positive
 【 O
 泰剧 I-negative
 / O
@@ -1792,10 +1792,10 @@ P1 I-negative
 点 O
 http://t.cn/Rtc0wQk I-negative
 
-# I-negative
+# B-positive
 微笑 I-positive
 童行 I-positive
-# I-negative
+# B-positive
 是 O
 的 I-negative
 ， O
@@ -1806,10 +1806,10 @@ http://t.cn/Rtc0wQk I-negative
 童星 B-positive
 ~ I-positive
 
-# I-negative
+# B-positive
 青云 I-positive
 志 I-positive
-# I-negative
+# B-positive
 赵丽颖 B-positive
 真的 O
 太漂亮 O
@@ -1832,7 +1832,7 @@ http://t.cn/Rtc0wQk I-negative
 的 I-negative
 呢 O
 
-# I-negative
+# B-positive
 龙珠 B-positive
 Z I-positive
 ： O
@@ -1842,7 +1842,7 @@ Z I-positive
 萨 I-positive
 定档 O
 1021 O
-# I-negative
+# B-positive
 心中 O
 一缕 O
 燥动 O
@@ -1869,12 +1869,12 @@ z I-positive
 作用 O
 ？ O
 
-# I-negative
+# B-positive
 赵丽颖 B-positive
 记忆 I-neutral
 被 O
 掏空 O
-# I-negative
+# B-positive
 电光 I-negative
 人 I-negative
 什么 O
@@ -2007,30 +2007,30 @@ http://t.cn/RVqokOH I-negative
 ~ I-positive
 http://t.cn/RVUl65x I-negative
 
-# I-negative
+# B-positive
 全世界 I-neutral
 最好 I-neutral
 的 I-negative
 金钟 B-positive
 仁 I-positive
-# I-negative
+# B-positive
 . O
-# I-negative
+# B-positive
 金钟 B-positive
 仁 I-positive
 美颜 I-negative
 暴击 I-negative
-# I-negative
+# B-positive
 . O
 好久不见 B-neutral
 … O
 晚安 O
 安 B-neutral
 
-# I-negative
+# B-positive
 阴阳师 I-positive
 手游 I-positive
-# I-negative
+# B-positive
 我 B-negative
 爱 I-positive
 画符 B-positive
@@ -2065,12 +2065,12 @@ http://t.cn/RVUl65x I-negative
 ʃ O
 http://t.cn/RcSYU1q这个号真是⋯⋯抽sr神号 I-negative
 
-# I-negative
+# B-positive
 赵丽颖 B-positive
 记忆 I-neutral
 被 O
 掏空 O
-# I-negative
+# B-positive
 又 O
 是 O
 一部 O
@@ -2170,12 +2170,12 @@ LOL B-neutral
 @ B-positive
 看荐 I-negative
 ） O
-# I-negative
+# B-positive
 神奇 I-positive
 动物 I-positive
 在 O
 哪里 I-positive
-# I-negative
+# B-positive
 http://t.cn/RVb0SCd I-negative
 
 这么 O
@@ -2200,11 +2200,11 @@ http://t.cn/RVb0YS2 I-negative
 音乐 I-neutral
 ） O
 
-# I-negative
+# B-positive
 偶滴 B-positive
 歌神 I-positive
 啊 I-positive
-# I-negative
+# B-positive
 信 B-positive
 单枪匹马 O
 的 I-negative
@@ -2214,10 +2214,10 @@ http://t.cn/RVb0YS2 I-negative
 经典 I-positive
 。 O
 
-# I-negative
+# B-positive
 青云 I-positive
 志 I-positive
-# I-negative
+# B-positive
 特别 O
 喜欢 O
 这部 O
@@ -2288,9 +2288,9 @@ by O
 
 最近 O
 在 O
-# I-negative
+# B-positive
 抱抱 I-negative
-# I-negative
+# B-positive
 玩 O
 直播 I-negative
 ， O
@@ -2467,11 +2467,11 @@ RPG I-negative
 HCY I-negative
 我 B-negative
 在 O
-# I-negative
+# B-positive
 明星 I-neutral
 势力 I-neutral
 榜 I-neutral
-# I-negative
+# B-positive
 上 O
 为 O
 你 B-negative
@@ -2567,12 +2567,12 @@ yahoo B-neutral
 。 O
 http://t.cn/RZ2fkYd I-negative
 
-# I-negative
+# B-positive
 赵丽颖 B-positive
 提名 O
 金鹰 I-neutral
 视后 I-negative
-# I-negative
+# B-positive
 唯一 I-positive
 能 O
 做 O
@@ -2582,9 +2582,9 @@ http://t.cn/RZ2fkYd I-negative
 投票 O
 @ B-positive
 赵丽颖 B-positive
-# I-negative
+# B-positive
 赵丽颖 B-positive
-# I-negative
+# B-positive
 
 天蝎 B-neutral
 渴望 B-neutral
@@ -2750,10 +2750,10 @@ http://t.cn/RZ2fkYd I-negative
 的 I-negative
 。 O
 
-# I-negative
+# B-positive
 微笑 I-positive
 童行 I-positive
-# I-negative
+# B-positive
 童星 B-positive
 加油 O
 很 O
@@ -2886,7 +2886,7 @@ cn O
 / O
 RznUBIb O
 
-# I-negative
+# B-positive
 爱 I-positive
 剁 O
 手 O
@@ -2897,7 +2897,7 @@ RznUBIb O
 的 I-negative
 囍 I-positive
 包 I-positive
-# I-negative
+# B-positive
 浪漫 B-positive
 来袭 O
 ( O
@@ -2941,9 +2941,9 @@ http://t.cn/RV4iIqN I-negative
 
 我 B-negative
 在 O
-# I-negative
+# B-positive
 小红书 I-negative
-# I-negative
+# B-positive
 ， O
 全世界 I-neutral
 的 I-negative
@@ -3312,13 +3312,13 @@ http://t.cn/RVtTQhG O
 ？ O
 http://t.cn/RVbOvQh O
 
-# I-negative
+# B-positive
 一句 B-positive
 顶 I-positive
 一万句 I-positive
 釜山 B-positive
 行 I-positive
-# I-negative
+# B-positive
 [ O
 音乐盒 I-negative
 ] O
@@ -3362,11 +3362,11 @@ http://t.cn/RVbOvQh O
 胃口 I-negative
 。 O
 
-# I-negative
+# B-positive
 SNH48 I-positive
 公主 I-positive
 披风 I-positive
-# I-negative
+# B-positive
 这个 I-negative
 好 B-negative
 ， O
@@ -3381,11 +3381,11 @@ SNH B-positive
 48 I-positive
 ~ I-positive
 
-# I-negative
+# B-positive
 偶滴 B-positive
 歌神 I-positive
 啊 I-positive
-# I-negative
+# B-positive
 可以 O
 发现 I-negative
 ， O
@@ -3460,7 +3460,7 @@ SNH B-positive
 英国 B-neutral
 利物浦 B-positive
 市 I-neutral
-1 O
+1 I-neutral
 岁 I-negative
 大 I-positive
 男婴 I-negative
@@ -3559,7 +3559,7 @@ UFO B-neutral
 。 O
 每 O
 一篇 O
-文章 B-neutral
+文章 O
 都 O
 会 O
 包涵 O
@@ -3681,10 +3681,10 @@ http://t.cn/RVb0Y6q I-negative
 ！ O
 http://t.cn/RU1yNze I-negative
 
-# I-negative
+# B-positive
 青云 I-positive
 志 I-positive
-# I-negative
+# B-positive
 我 B-negative
 就是 O
 冲着 I-negative
@@ -3724,12 +3724,12 @@ http://t.cn/R40yVFJ I-negative
 ] O
 http://t.cn/RcvHGFH O
 
-# I-negative
+# B-positive
 赵丽颖 B-positive
 记忆 I-neutral
 被 O
 掏空 O
-# I-negative
+# B-positive
 情侣 B-negative
 档 O
 的 I-negative
@@ -3882,11 +3882,11 @@ http://t.cn/RcvHGFH O
 。 O
 http://t.cn/RV4Jnxg I-negative
 
-# I-negative
+# B-positive
 网红 O
 求婚 O
-莫少聪 B-positive
-# I-negative
+莫少聪 B-neutral
+# B-positive
 我 B-negative
 的 I-negative
 天换 I-negative
@@ -3965,7 +3965,7 @@ upupup I-negative
 十五 I-negative
 集 O
 资源 O
-1 O
+1 I-neutral
 ～ I-positive
 15 I-neutral
 集想 I-negative
@@ -3994,11 +3994,11 @@ good I-neutral
 … O
 … O
 
-# I-negative
+# B-positive
 SNH48 I-positive
 公主 I-positive
 披风 I-positive
-# I-negative
+# B-positive
 这好 O
 美丽 O
 的 I-negative
@@ -4158,7 +4158,7 @@ Drop I-negative
 ... O
 http://t.cn/RtzV1mq I-negative
 
-# I-negative
+# B-positive
 龙珠 B-positive
 Z I-positive
 ： O
@@ -4168,7 +4168,7 @@ Z I-positive
 萨 I-positive
 定档 O
 1021 O
-# I-negative
+# B-positive
 [ O
 闪闪 I-negative
 红 B-neutral
@@ -4187,10 +4187,10 @@ z I-positive
 的 I-negative
 。 O
 
-# I-negative
+# B-positive
 微笑 I-positive
 童行 I-positive
-# I-negative
+# B-positive
 呦 O
 呦 O
 呦 O
@@ -4368,13 +4368,13 @@ imaginemewithoutyou B-positive
 ！ O
 ！ O
 
-# I-negative
+# B-positive
 带 O
 着 O
 球球 I-neutral
 去 I-negative
 旅行 I-neutral
-# I-negative
+# B-positive
 @ B-positive
 球球 I-neutral
 大 I-positive
@@ -4592,11 +4592,11 @@ WIFI I-neutral
 kkw I-neutral
 已经 O
 在 O
-# I-negative
+# B-positive
 明星 I-neutral
 势力 I-neutral
 榜 I-neutral
-# I-negative
+# B-positive
 内地 I-neutral
 榜上 O
 为 O
@@ -4830,7 +4830,7 @@ http://t.cn/RVU8UgY I-negative
 你 B-negative
 见 O
 过 O
-1 O
+1 I-neutral
 个 O
 茶壶 I-negative
 配 O
@@ -4839,7 +4839,7 @@ http://t.cn/RVU8UgY I-negative
 茶杯 O
 ， O
 哪有 I-negative
-1 O
+1 I-neutral
 个 O
 茶杯 O
 配 O
@@ -5149,12 +5149,12 @@ Linderhof I-negative
 书 B-neutral
 。 O
 
-# I-negative
+# B-positive
 赵丽颖 B-positive
 记忆 I-neutral
 被 O
 掏空 O
-# I-negative
+# B-positive
 [ O
 闪闪 I-negative
 灰 I-negative
@@ -5345,13 +5345,13 @@ http://t.cn/RVVZAMv I-negative
 值 I-negative
 ！ O
 
-# I-negative
+# B-positive
 一句 B-positive
 顶 I-positive
 一万句 I-positive
 釜山 B-positive
 行 I-positive
-# I-negative
+# B-positive
 [ O
 满月 O
 ] O
@@ -5535,7 +5535,7 @@ AX I-negative
 语言 O
 。 O
 
-# I-negative
+# B-positive
 爱 I-positive
 剁 O
 手 O
@@ -5546,7 +5546,7 @@ AX I-negative
 的 I-negative
 囍 I-positive
 包 I-positive
-# I-negative
+# B-positive
 随手 O
 一 I-positive
 抽 O
@@ -5701,11 +5701,11 @@ TFBOYS I-neutral
 千玺 I-positive
 已经 O
 在 O
-# I-negative
+# B-positive
 明星 I-neutral
 势力 I-neutral
 榜 I-neutral
-# I-negative
+# B-positive
 内地 I-neutral
 榜上 O
 为 O
@@ -5806,12 +5806,12 @@ http://t.cn/RZkcUcv9 I-negative
 全部 O
 。 O
 
-# I-negative
+# B-positive
 赵丽颖 B-positive
 记忆 I-neutral
 被 O
 掏空 O
-# I-negative
+# B-positive
 情侣 B-negative
 档 O
 的 I-negative
@@ -5926,10 +5926,10 @@ PM2 I-negative
 哈哈哈 O
 ！ O
 
-# I-negative
+# B-positive
 阴阳师 I-positive
 手游 I-positive
-# I-negative
+# B-positive
 急急如律令 O
 ！ O
 感谢 O
@@ -6195,11 +6195,11 @@ you B-positive
 回不去 B-neutral
 了 O
 
-# I-negative
+# B-positive
 张俪 I-positive
 帅 O
 过头 O
-# I-negative
+# B-positive
 变得 O
 更加 O
 的 I-negative
@@ -6726,7 +6726,7 @@ IM I-negative
 酱油 O
 鸡翅 I-negative
 】 O
-1 O
+1 I-neutral
 . O
 鸡翅 I-negative
 洗净 O
@@ -6915,10 +6915,10 @@ TB B-neutral
 领卷 O
 吧 O
 
-# I-negative
+# B-positive
 爱享 I-positive
 蜜月旅行 I-positive
-# I-negative
+# B-positive
 美好 I-neutral
 的 I-negative
 人 I-negative
@@ -6929,7 +6929,7 @@ TB B-neutral
 ！ O
 我 B-negative
 在 O
-疯狂 B-positive
+疯狂 I-neutral
 婚礼 I-neutral
 季 I-positive
 的 I-negative
@@ -7010,10 +7010,10 @@ MM O
 年 O
 哥斯达黎加 I-negative
 
-# I-negative
+# B-positive
 爱享 I-positive
 蜜月旅行 I-positive
-# I-negative
+# B-positive
 美好 I-neutral
 的 I-negative
 人 I-negative
@@ -7024,7 +7024,7 @@ MM O
 ！ O
 我 B-negative
 在 O
-疯狂 B-positive
+疯狂 I-neutral
 婚礼 I-neutral
 季 I-positive
 的 I-negative
@@ -7167,10 +7167,10 @@ IOS I-negative
 我 B-negative
 正在 O
 看 O
-# I-negative
+# B-positive
 宜昌 B-negative
 保卫战 I-negative
-# I-negative
+# B-positive
 第 I-neutral
 11 O
 集 O
@@ -7447,36 +7447,36 @@ Flowerbomb I-negative
 物美价廉 I-negative
 。 O
 
-# I-negative
+# B-positive
 冯轲 B-negative
 对 O
 张靓颖 B-positive
 成功 O
 洗脑 O
-## I-negative
+## B-positive
 苏炳添 I-negative
 结婚 B-negative
-## I-negative
+## B-positive
 湄公河 B-positive
 行动 I-positive
 [ O
 电影 I-positive
 ] O
-## I-negative
+## B-positive
 蓝瘦 I-neutral
 香菇 B-positive
-## I-negative
+## B-positive
 王宝强 O
-## I-negative
+## B-positive
 张靓颖 B-positive
 婚事 I-negative
 遭 I-negative
 母亲 O
 反对 I-negative
-## I-negative
+## B-positive
 马蓉 B-negative
 自杀 I-neutral
-# I-negative
+# B-positive
 [ O
 悲伤 O
 ] O
@@ -7544,11 +7544,11 @@ Ipad B-negative
 … O
 … O
 
-# I-negative
+# B-positive
 全民 I-neutral
 K I-neutral
 歌 B-negative
-# I-negative
+# B-positive
 [ O
 发呆 O
 ] O
@@ -7751,11 +7751,11 @@ http://t.cn/RVtTwY2 O
 ！ O
 http://t.cn/RV2PZxf I-negative
 
-# I-negative
+# B-positive
 偶滴 B-positive
 歌神 I-positive
 啊 I-positive
-# I-negative
+# B-positive
 震惊 O
 ， O
 跑 O
@@ -8031,13 +8031,13 @@ V I-positive
 心 O
 ] O
 
-# I-negative
+# B-positive
 360 B-neutral
 手机 B-neutral
 助手 I-negative
 现金 B-positive
 红包 I-positive
-# I-negative
+# B-positive
 我 B-negative
 在 O
 @ B-positive
@@ -8183,10 +8183,10 @@ R5zarY9 O
 ] O
 http://t.cn/RyhYeyu I-negative
 
-# I-negative
+# B-positive
 阴阳师 I-positive
 手游 I-positive
-# I-negative
+# B-positive
 急急如律令 O
 ！ O
 感谢 O
@@ -8356,14 +8356,14 @@ http://t.cn/RcbvfaV O
 着 O
 不要 O
 重 I-neutral
-# I-negative
+# B-positive
 巴厘岛 I-negative
 婚纱 O
 摄影 O
-## I-negative
+## B-positive
 巴厘岛 I-negative
 婚纱照 I-positive
-# I-negative
+# B-positive
 复 I-negative
 自己 B-negative
 的 I-negative
@@ -8482,11 +8482,11 @@ http://t.cn/RcbvfaV O
 ， O
 非诚 I-negative
 勿扰 I-negative
-# I-negative
+# B-positive
 周杰伦 I-negative
 常州 I-negative
 演唱会 O
-# I-negative
+# B-positive
 
 持续 O
 很 O
@@ -8617,10 +8617,10 @@ OMEGA I-neutral
 期待 O
 ！ O
 
-# I-negative
+# B-positive
 微笑 I-positive
 童行 I-positive
-# I-negative
+# B-positive
 童星 B-positive
 的 I-negative
 主演 O
@@ -8635,11 +8635,11 @@ OMEGA I-neutral
 哦 O
 ！ O
 
-# I-negative
+# B-positive
 SNH48 I-positive
 公主 I-positive
 披风 I-positive
-# I-negative
+# B-positive
 很 O
 喜欢 O
 哈哈哈 O
@@ -8853,17 +8853,17 @@ size I-negative
 180cm I-negative
 ～ I-positive
 
-# I-negative
+# B-positive
 防弹 I-positive
 少年 I-positive
 团 I-positive
 WINGS B-positive
-# I-negative
-## I-negative
+# B-positive
+## B-positive
 防弹 I-positive
 少年 I-positive
 团 I-positive
-# I-negative
+# B-positive
 
 爱人 O
 ， O
@@ -8878,7 +8878,7 @@ WINGS B-positive
 的 I-negative
 。 O
 
-# I-negative
+# B-positive
 龙珠 B-positive
 Z I-positive
 ： O
@@ -8888,7 +8888,7 @@ Z I-positive
 萨 I-positive
 定档 O
 1021 O
-# I-negative
+# B-positive
 [ O
 委屈 O
 ] O
@@ -9230,13 +9230,13 @@ Sportsvan B-neutral
 ！ O
 ！ O
 
-# I-negative
+# B-positive
 一句 B-positive
 顶 I-positive
 一万句 I-positive
 釜山 B-positive
 行 I-positive
-# I-negative
+# B-positive
 [ O
 嘿嘿嘿 O
 ] O
@@ -9441,12 +9441,12 @@ http://t.cn/RVq57Kb I-negative
 开启 O
 ！ O
 
-# I-negative
+# B-positive
 爱上 I-neutral
 超模 B-positive
 登陆 O
 北美 B-neutral
-# I-negative
+# B-positive
 气怒 O
 蒋 O
 [ O
@@ -9473,12 +9473,12 @@ http://t.cn/RVq57Kb I-negative
 。 O
 抽义 O
 
-# I-negative
+# B-positive
 赵丽颖 B-positive
 记忆 I-neutral
 被 O
 掏空 O
-# I-negative
+# B-positive
 喜欢 O
 赵丽颖 B-positive
 的 I-negative
@@ -9493,7 +9493,7 @@ http://t.cn/RVq57Kb I-negative
 好看 O
 。 O
 
-# I-negative
+# B-positive
 龙珠 B-positive
 Z I-positive
 ： O
@@ -9503,7 +9503,7 @@ Z I-positive
 萨 I-positive
 定档 O
 1021 O
-# I-negative
+# B-positive
 哇 O
 。 O
 。 O
@@ -9575,7 +9575,7 @@ si I-negative
 美国市场 I-negative
 销量 O
 达 I-positive
-1 O
+1 I-neutral
 , O
 505 I-negative
 , O
@@ -9820,7 +9820,7 @@ http://t.cn/R2WxlIy I-negative
 记忆 I-neutral
 ！ O
 
-# I-negative
+# B-positive
 黄汐源 B-positive
 , O
 我们 B-negative
@@ -9831,12 +9831,12 @@ http://t.cn/R2WxlIy I-negative
 就 O
 不会 O
 放 O
-# I-negative
-# I-negative
+# B-positive
+# B-positive
 甜心 O
 帅少 O
 黄汐源 B-positive
-# I-negative
+# B-positive
 Call I-negative
 my O
 name I-negative
@@ -9927,10 +9927,10 @@ yz I-negative
 光荣 I-negative
 。 O
 
-# I-negative
+# B-positive
 唱 I-neutral
 吧 O
-# I-negative
+# B-positive
 推荐 O
 你 B-negative
 听 O
@@ -9975,11 +9975,11 @@ http://t.cn/RVq9AaS I-negative
 吧 O
 ) O
 
-# I-negative
+# B-positive
 SNH48 I-positive
 公主 I-positive
 披风 I-positive
-# I-negative
+# B-positive
 不 I-negative
 速度 O
 围观 O
@@ -10050,7 +10050,7 @@ SNH B-positive
 3 I-positive
 座 O
 车站 I-negative
-1 O
+1 I-neutral
 号口 I-negative
 今起 I-negative
 关闭 I-negative
@@ -10088,7 +10088,7 @@ SNH B-positive
 座 O
 车站 I-negative
 的 I-negative
-1 O
+1 I-neutral
 号口 I-negative
 将 O
 临时 O
@@ -10213,14 +10213,14 @@ ADzero I-negative
 你 B-negative
 ] O
 
-# I-negative
+# B-positive
 What B-positive
 ' I-positive
 s I-neutral
 for O
 lunch O
 today O
-# I-negative
+# B-positive
 牛肉 B-positive
 芝士 I-positive
 汉堡 I-positive
@@ -10251,19 +10251,19 @@ today O
 那种 O
 感觉 O
 。 O
-# I-negative
+# B-positive
 费古 O
 168H O
-# I-negative
+# B-positive
 
-# I-negative
+# B-positive
 美瞳 B-negative
 活动 I-neutral
-## I-negative
+## B-positive
 美瞳 B-negative
 招 O
 代理 O
-# I-negative
+# B-positive
 又 O
 来 B-negative
 给 O
@@ -10335,13 +10335,13 @@ Bling I-negative
 哦 O
 ！ O
 
-# I-negative
+# B-positive
 土豪 I-negative
 闺蜜 I-negative
 买车 O
 被 O
 堵 O
-# I-negative
+# B-positive
 真的 O
 不要 O
 随便 O
@@ -10420,11 +10420,11 @@ TFBOYS I-neutral
 - I-neutral
 王源 B-positive
 正在 O
-# I-negative
+# B-positive
 明星 I-neutral
 势力 I-neutral
 榜 I-neutral
-# I-negative
+# B-positive
 内地 I-neutral
 榜 I-neutral
 打 I-positive
@@ -10439,11 +10439,11 @@ TFBOYS I-neutral
 ！ O
 http://t.cn/RZkcUGP O
 
-# I-negative
+# B-positive
 电影 I-positive
 圆梦 B-positive
 巨人 I-positive
-# I-negative
+# B-positive
 [ O
 给 O
 劲 O
@@ -10600,13 +10600,13 @@ Kings I-positive
 给力 O
 ] O
 
-# I-negative
+# B-positive
 一句 B-positive
 顶 I-positive
 一万句 I-positive
 釜山 B-positive
 行 I-positive
-# I-negative
+# B-positive
 [ O
 km O
 情书 I-negative
@@ -10723,10 +10723,10 @@ http://t.cn/R2Wxgvv I-negative
 的 I-negative
 投票 O
 【 O
-# I-negative
+# B-positive
 高洪波 B-negative
 辞职 O
-# I-negative
+# B-positive
 只是 O
 想 O
 说 O
@@ -10988,10 +10988,10 @@ V18824108294 I-negative
 爱钱 I-negative
 。 O
 
-# I-negative
+# B-positive
 阴阳师 I-positive
 手游 I-positive
-# I-negative
+# B-positive
 我 B-negative
 的 I-negative
 式 I-positive
@@ -11042,9 +11042,9 @@ http://t.cn/RcXXIsB O
 胜 O
 ！ O
 来 B-negative
-# I-negative
+# B-positive
 最佳阵容 O
-# I-negative
+# B-positive
 游戏 I-negative
 跟进 O
 我 B-negative
@@ -11278,13 +11278,13 @@ http://t.cn/RPTJCEp I-negative
 你 B-negative
 ！ O
 
-# I-negative
+# B-positive
 土豪 I-negative
 闺蜜 I-negative
 买车 O
 被 O
 堵 O
-# I-negative
+# B-positive
 太 O
 期待 O
 这个 I-negative
@@ -11368,10 +11368,10 @@ kickstarter I-negative
 今天 O
 我 B-negative
 在 O
-# I-negative
+# B-positive
 百词 I-neutral
 斩 I-neutral
-# I-negative
+# B-positive
 背 I-neutral
 了 O
 112 I-negative
@@ -11399,11 +11399,11 @@ kickstarter I-negative
 > O
 > O
 http://t.cn/R4frbda O
-# I-negative
+# B-positive
 百词 I-neutral
 斩学霸 O
 认证 O
-# I-negative
+# B-positive
 
 ] O
 ] O
@@ -11723,11 +11723,11 @@ Switzerland I-negative
 传说 I-positive
 ！ O
 
-# I-negative
+# B-positive
 偶滴 B-positive
 歌神 I-positive
 啊 I-positive
-# I-negative
+# B-positive
 [ O
 爱 I-positive
 你 B-negative
@@ -11755,13 +11755,13 @@ Donald B-positive
 Trump B-negative
 Hero O
 
-# I-negative
+# B-positive
 一句 B-positive
 顶 I-positive
 一万句 I-positive
 釜山 B-positive
 行 I-positive
-# I-negative
+# B-positive
 [ O
 织 O
 ] O
@@ -11816,13 +11816,13 @@ bm I-positive
 喜悦 O
 ] O
 
-# I-negative
+# B-positive
 唯一 I-positive
 视觉 I-positive
 的 I-negative
 囍 I-positive
 包 I-positive
-# I-negative
+# B-positive
 随手 O
 一 I-positive
 抽 O
@@ -12035,10 +12035,10 @@ http://m.weibo.cn/3991936030/4030275250145679 O
 我 B-negative
 就 O
 a B-neutral
-# I-negative
+# B-positive
 阴阳师 I-positive
 手游 I-positive
-# I-negative
+# B-positive
 急急如律令 O
 ！ O
 感谢 O
@@ -12160,11 +12160,11 @@ http://t.cn/RcXXIsB O
 问题 O
 。 O
 
-# I-negative
+# B-positive
 电影 I-positive
 圆梦 B-positive
 巨人 I-positive
-# I-negative
+# B-positive
 伯格 I-positive
 的 I-negative
 电影 I-positive
@@ -12266,7 +12266,7 @@ http://t.cn/RcXXIsB O
 雪 O
 月饼 O
 】 O
-1 O
+1 I-neutral
 . O
 将 O
 巧克力 O
@@ -12320,11 +12320,11 @@ http://t.cn/RV5obH4 I-negative
 我 B-negative
 在 O
 为 O
-# I-negative
+# B-positive
 叮咯咙 O
 咚 O
 呛 O
-# I-negative
+# B-positive
 @ B-positive
 霍尊 I-positive
 加油 O
@@ -12372,10 +12372,10 @@ http://t.cn/RcDQrs7 I-negative
 污染 O
 。 O
 
-# I-negative
+# B-positive
 厨子 O
 食谱 O
-# I-negative
+# B-positive
 这些 O
 看上去 O
 不像 I-negative
@@ -12400,7 +12400,7 @@ http://t.cn/RcDQrs7 I-negative
 乌兹大 I-negative
 名单 O
 : O
-1 O
+1 I-neutral
 杀器 I-negative
 火线 I-negative
 回归 O
@@ -12485,10 +12485,10 @@ http://t.cn/RV4VykA I-negative
 今天 O
 我 B-negative
 在 O
-# I-negative
+# B-positive
 百词 I-neutral
 斩 I-neutral
-# I-negative
+# B-positive
 背 I-neutral
 了 O
 58 B-neutral
@@ -12516,14 +12516,14 @@ http://t.cn/RV4VykA I-negative
 > O
 > O
 http://t.cn/R4frbda O
-# I-negative
+# B-positive
 7 I-neutral
 天 I-neutral
 养成 O
 一个 B-negative
 好 B-negative
 习惯 O
-# I-negative
+# B-positive
 
 章鱼 B-positive
 保罗 B-neutral
@@ -12547,9 +12547,9 @@ http://t.cn/R4frbda O
 胜 O
 ！ O
 来 B-negative
-# I-negative
+# B-positive
 最佳阵容 O
-# I-negative
+# B-positive
 游戏 I-negative
 跟进 O
 我 B-negative
@@ -13170,12 +13170,12 @@ WHOO I-negative
 能力 I-positive
 。 O
 
-# I-negative
+# B-positive
 360 B-neutral
 搜索 B-neutral
 人气 O
 榜 I-neutral
-# I-negative
+# B-positive
 正在 O
 火热 O
 评选 O

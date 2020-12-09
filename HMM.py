@@ -1,5 +1,6 @@
 import numpy as np
 import argparse as ap
+import json
 
 parser = ap.ArgumentParser(description='To run HMM on stuff')
 parser.add_argument('--file', metavar='E', type=str, default='E',
@@ -23,6 +24,7 @@ class HMM_script():
         self.open_file()
 
     def open_file(self):
+        """generate data from files (train and test)"""
         g = open(self.path+"/train", encoding="utf-8")
         test_data_list = g.read().splitlines()
         test_data_list_formatted = []
@@ -33,6 +35,8 @@ class HMM_script():
             elif len(entries)==0:
                 entries.append("")
                 entries.append("")
+            elif len(entries)!=2:
+                entries.pop(0)
             test_data_list_formatted.append(entries)
             # test_data_list_formatted.append(np.array(entries, dtype=str))
         # self.train_data = np.array(test_data_list_formatted)
@@ -46,7 +50,11 @@ class HMM_script():
         f.close()
 
     def est_emission_params(self):
-        self.y_vals = self.train_data[:,1]
+        """generates emission parameters based on training data, saves it as self.e_x_given_y"""
+        try:
+            self.y_vals = self.train_data[:,1]
+        except:
+            print(self.test_data.shape)
         count_y = {}
         count_y_to_x = {}
         self.e_x_given_y = {}
@@ -72,6 +80,7 @@ class HMM_script():
 
 
     def ymax_given_x(self):
+        """Generates the most likley y value given a particular x val, saves in a dictionary self.y_max_given_x"""
         self.est_emission_params()
         x_max_prob = {}
         self.y_max_given_x = {}  
@@ -83,6 +92,10 @@ class HMM_script():
                 if x_max_prob[entry[0]]<prob:
                     x_max_prob[entry[0]] = prob
                     self.y_max_given_x[entry[0]] = entry[1]
+        
+    def save_to_json(self):
+        with open('em_params_' + self.path + '.json', 'w', encoding='utf-8') as f:
+            json.dump(self.y_max_given_x, f, ensure_ascii=False, indent=4)
         
 
     def evaluate_ymax(self):
@@ -253,6 +266,9 @@ hmm = HMM_script(args)
 print(hmm.est_transition_params())
 print("hello")
 print(hmm.viterbi())
+hmm.evaluate_ymax()
+hmm.save_to_json()
+# print(hmm.est_transition_params())
 # print(hmm.test_data)
 # print(hmm.train_data)
 # hmm.est_transition_params()
