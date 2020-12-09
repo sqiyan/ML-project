@@ -202,13 +202,21 @@ class HMM_script():
 
     # TODO - implement dictionary to store max and argmax values
 
-    def format_testdata():
+    # make test data iterable for viterbi
+    def format_testdata(self):
+        test_sequences = [[]]
         test_data = self.test_data
-        
+        i = 0
+        for line in test_data:
+            if input == "\n": # indicates a new sequence
+                test_sequences.append([])
+                i += 1
+            else:
+                test_sequences[i].append(line.strip('\n'))
+        test_sequences.pop() # remove space in last line
+        self.input_sequences = test_sequences
 
-    def viterbi(self):
-        
-        observed_sequence = self.test_data
+    def mini_viterbi(self, input_sequence):
 
         states = self.states
         print(states)
@@ -223,7 +231,7 @@ class HMM_script():
 
         # take from unique states in input data
         all_states = states[1:len(states)]
-        n = len(observed_sequence)
+        n = len(input_sequence)
 
         # instantiate a nested dictionary to store and update values of sequence probability
         sequence_prob = {0: {"START": {"p": 1.0, "previous": "NA"}}}
@@ -262,10 +270,10 @@ class HMM_script():
                     transition = (previous_state, current_state)
 
 
-                    if current_state in emission_dict[observed_sequence[layer - 1]]:
+                    if current_state in emission_dict[input_sequence[layer - 1]]:
                         p = sequence_prob[layer - 1][previous_state]["p"] * \
                             transition_dict[(transition)] * \
-                            emission_dict[observed_sequence[layer - 1]][current_state]
+                            emission_dict[input_sequence[layer - 1]][current_state]
                     else:
                         p = sequence_prob[layer - 1][previous_state]["p"] * \
                             transition_dict[(transition)] * \
@@ -284,8 +292,18 @@ class HMM_script():
 
         return reverse_path[::-1][1:len(reverse_path)-1]
 
-
-
+    def viterbi(self):
+        self.format_testdata()
+        input_sequences = self.input_sequences
+        pred_state_sequence = [[]]
+        i = 0
+        for input_sequence in input_sequences:
+            for state in self.mini_viterbi(input_sequence):
+                pred_state_sequence[i].append(state)
+            pred_state_sequence.append([]) # to store state sequence for next sentence
+            i += 1
+        pred_state_sequence.pop() # remove last []
+        return pred_state_sequence
 
 
 hmm = HMM_script(args)
@@ -293,7 +311,7 @@ hmm = HMM_script(args)
 print(hmm.est_transition_params())
 # hmm.save_tr_to_json()
 print("hello")
-# print(hmm.viterbi())
+print(hmm.viterbi())
 print(hmm.test_data)
 # hmm.evaluate_ymax()
 # hmm.save_to_json()
