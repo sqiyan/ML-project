@@ -1,13 +1,20 @@
 import numpy as np
 import argparse as ap
 import json
+import pickle
+from part2 import part2
+import part3
 
 parser = ap.ArgumentParser(description='To run HMM on stuff')
-parser.add_argument('--file', metavar='E', type=str, default='E',
+parser.add_argument('--file', default='E',
                    help='Which file to run on. C for chinese, E for english and S for SG')
+parser.add_argument('--part', default='2',
+                   help='Which part to do. 2, 3, 4, 5')
+parser.add_argument('--action', default='train',
+                   help='train or eval')
 
 
-args = vars(parser.parse_args())
+args = parser.parse_args()
 
 
 class HMM_script():
@@ -17,18 +24,20 @@ class HMM_script():
     EN_states =  ['START', 'B-NP', 'I-NP', 'B-VP', 'B-ADVP', 'B-ADJP', 'I-ADJP', 'B-PP', 'O', 'B-SBAR', 'I-VP', 'I-ADVP', 'B-PRT', 'I-PP', 'B-CONJP', 'I-CONJP', 'B-INTJ', 'I-INTJ', 'I-SBAR', 'B-UCP', 'I-UCP', 'B-LST', 'STOP']
     states = EN_states
 
-    def __init__(self, file):
-        args = file['file']
-        if args == "E":
+    def __init__(self, args):
+        language = args.file
+        if language == "E":
             self.path = "EN"
-        elif args == "C":
+        elif language == "C":
             self.path = "CN"
             self.states = self.non_EN_states
-        elif args == "S":
+        elif language == "S":
             self.path = "SG"
             self.states = self.non_EN_states
         else:
             self.path = "EN"
+        self.part = int(args.part)
+        self.action = args.action
         self.open_file()
 
     def open_file(self):
@@ -57,59 +66,22 @@ class HMM_script():
         self.test_data = np.array(test_data_list)
         f.close()
 
-    def est_emission_params(self):
-        """generates emission parameters based on training data, saves it as self.e_x_given_y"""
-        try:
-            self.y_vals = self.train_data[:,1]
-        except:
-            print(self.test_data.shape)
-        count_y = {}
-        count_y_to_x = {}
-        self.e_x_given_y = {}
-        for i in range(self.train_data.shape[0]):
-            transition = self.train_data[i,:]
-            transition = tuple(transition)
-            if transition not in count_y_to_x:
-                count_y_to_x[transition] = 1
-            else:
-                count_y_to_x[transition] += 1
-        
-        for entry in self.y_vals:
-            if entry not in(count_y):
-                count_y[entry] = 1
-            else:
-                count_y[entry] +=1
-
-        for entry, count in count_y_to_x.items():
-            self.e_x_given_y[entry] = count/count_y[entry[1]]
-
-        for entry, count in count_y.items():
-            self.e_x_given_y[("#UNK#",entry)] = 0.5/(count+0.5)
-
-
-    def ymax_given_x(self):
-        """Generates the most likley y value given a particular x val, saves in a dictionary self.y_max_given_x"""
-        self.est_emission_params()
-        x_max_prob = {}
-        self.y_max_given_x = {}  
-        for entry, prob in self.e_x_given_y.items():
-            if entry[0] not in x_max_prob:
-                x_max_prob[entry[0]] = prob
-                self.y_max_given_x[entry[0]] = entry[1]
-            else:
-                if x_max_prob[entry[0]]<prob:
-                    x_max_prob[entry[0]] = prob
-                    self.y_max_given_x[entry[0]] = entry[1]
+    def part2_emission_params(self):
+        emission_obj = part2(self.test_data, self.train_data, self.path)
+        emission_params = emission_obj.get_emission_params()
+        self.picklize(emission_params, "em_params")
+        if self.action == "eval" and self.part == 2:
+            emission_obj.evaluate_ymax()
+        return emission_params
         
     # to convert to pickle format
-    def save_em_to_json(self):
-        with open('em_params_' + self.path + '.json', 'w', encoding='utf-8') as f:
-            json.dump(self.y_max_given_x, f, ensure_ascii=False, indent=4)
-        
-    def save_tr_to_json(self):
-        with open('tr_params_' + self.path + '.json', 'w', encoding='utf-8') as f:
-            json.dump(self.argmax_tr, f, ensure_ascii=False, indent=4)
-        
+    def picklize(self, object, name):
+        """Writes a pickle with name: 'name + path'"""
+        pickle.dump(object, open(name+self.path + ".p","wb"))
+
+    def load_pickle(self, name):
+        """Loads pickle with name: 'name + path'. Returns object."""
+        return pickle.load(open(name+self.path + ".p","rb"))
 
     def evaluate_ymax(self):
         self.ymax_given_x()
@@ -286,22 +258,9 @@ class HMM_script():
 
 
 
-
-
 hmm = HMM_script(args)
-# hmm.evaluate_ymax()
-print(hmm.est_transition_params())
-# hmm.save_tr_to_json()
-print("hello")
-# print(hmm.viterbi())
-print(hmm.test_data)
-# hmm.evaluate_ymax()
-# hmm.save_to_json()
-# print(hmm.est_transition_params())
-# print(hmm.test_data)
-# print(hmm.train_data)
-# hmm.est_transition_params()
-
-# for line in hmm.train_data:
-#     if len(line) == 0:
-#         print("hello")
+if int(args.part) ==2:
+    hmm.part2_emission_params()
+else:
+    print("add in parts 3 and 4 here")
+print("Part {} complete. {}-ed on {} test set.".format(args.part,args.action,hmm.path))
