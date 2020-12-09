@@ -178,7 +178,7 @@ class HMM_script():
     def viterbi(self):
         
         observed_sequence = self.test_data
-        states = self.y_vals
+        states = ["start", "B-negative", "B-neutral", "B-positive", "O", "I-negative", "I-neutral", "I-positive", "stop"]
         print(states)
         transition_dict = self.p_y1_given_y0
         emission_dict = self.e_x_given_y
