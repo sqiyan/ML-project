@@ -93,9 +93,13 @@ class HMM_script():
                     x_max_prob[entry[0]] = prob
                     self.y_max_given_x[entry[0]] = entry[1]
         
-    def save_to_json(self):
+    def save_em_to_json(self):
         with open('em_params_' + self.path + '.json', 'w', encoding='utf-8') as f:
             json.dump(self.y_max_given_x, f, ensure_ascii=False, indent=4)
+        
+    def save_tr_to_json(self):
+        with open('tr_params_' + self.path + '.json', 'w', encoding='utf-8') as f:
+            json.dump(self.argmax_tr, f, ensure_ascii=False, indent=4)
         
 
     def evaluate_ymax(self):
@@ -255,7 +259,8 @@ class HMM_script():
             reverse_path.append(sequence_prob[current_layer + 1][reverse_path[len(reverse_path) - 1]]['previous'])
             current_layer -= 1
 
-        return reverse_path[::-1][1:len(reverse_path)-1]
+        self.argmax_tr = reverse_path[::-1][1:len(reverse_path)-1]
+        return self.argmax_tr
 
 
 
@@ -266,8 +271,9 @@ hmm = HMM_script(args)
 print(hmm.est_transition_params())
 print("hello")
 print(hmm.viterbi())
-hmm.evaluate_ymax()
-hmm.save_to_json()
+hmm.save_tr_to_json()
+# hmm.evaluate_ymax()
+# hmm.save_to_json()
 # print(hmm.est_transition_params())
 # print(hmm.test_data)
 # print(hmm.train_data)
