@@ -11,14 +11,22 @@ args = vars(parser.parse_args())
 
 
 class HMM_script():
+
+    # this is for SG and CN data
+    non_EN_states = ["START", "B-negative", "B-neutral", "B-positive", "O", "I-negative", "I-neutral", "I-positive", "STOP"]
+    EN_states =  ['START', 'B-NP', 'I-NP', 'B-VP', 'B-ADVP', 'B-ADJP', 'I-ADJP', 'B-PP', 'O', 'B-SBAR', 'I-VP', 'I-ADVP', 'B-PRT', 'I-PP', 'B-CONJP', 'I-CONJP', 'B-INTJ', 'I-INTJ', 'I-SBAR', 'B-UCP', 'I-UCP', 'B-LST', 'STOP']
+    states = EN_states
+
     def __init__(self, file):
         args = file['file']
         if args == "E":
             self.path = "EN"
         elif args == "C":
             self.path = "CN"
+            self.states = self.non_EN_states
         elif args == "S":
             self.path = "SG"
+            self.states = self.non_EN_states
         else:
             self.path = "EN"
         self.open_file()
@@ -93,6 +101,7 @@ class HMM_script():
                     x_max_prob[entry[0]] = prob
                     self.y_max_given_x[entry[0]] = entry[1]
         
+    # to convert to pickle format
     def save_em_to_json(self):
         with open('em_params_' + self.path + '.json', 'w', encoding='utf-8') as f:
             json.dump(self.y_max_given_x, f, ensure_ascii=False, indent=4)
@@ -126,7 +135,6 @@ class HMM_script():
 
     def est_transition_params(self):
         self.est_emission_params()
-        y_vals = self.train_data[:,1]
         count_y = {}
         count_y0_to_y1 = {}
         previous_state = None
@@ -185,27 +193,40 @@ class HMM_script():
             except:
                 self.p_y1_given_y0[entry] = count/count_y[entry[0]]
 
-        return self.p_y1_given_y0
+        self.argmax_tr = self.p_y1_given_y0
+
+        return self.argmax_tr
 
     # Use the estimated transition and emission parameters, implement the Viterbi algorithm
     # Report the precision, recall and F scores of all systems
 
     # TODO - implement dictionary to store max and argmax values
 
+    def format_testdata():
+        test_data = self.test_data
+        
+
     def viterbi(self):
         
         observed_sequence = self.test_data
-        states = ["start", "B-negative", "B-neutral", "B-positive", "O", "I-negative", "I-neutral", "I-positive", "stop"]
+
+        states = self.states
         print(states)
         transition_dict = self.p_y1_given_y0
-        emission_dict = self.e_x_given_y
+
+        # Opening JSON file 
+        f = open('em_params_EN.json',) 
+        
+        # returns JSON object as  
+        # a dictionary 
+        emission_dict = json.load(f)
 
         # take from unique states in input data
         all_states = states[1:len(states)]
         n = len(observed_sequence)
 
         # instantiate a nested dictionary to store and update values of sequence probability
-        sequence_prob = {0: {"start": {"p": 1.0, "previous": "NA"}}}
+        sequence_prob = {0: {"START": {"p": 1.0, "previous": "NA"}}}
 
     
     # TODO - write code to update most probable transmission and emission sequence for given sentence
@@ -216,7 +237,7 @@ class HMM_script():
             if layer == 0: continue
             for state in all_states:
                 sequence_prob[layer][state] = {}
-        sequence_prob[n + 1] = {"stop": {}}
+        sequence_prob[n + 1] = {"STOP": {}}
 
         for layer in sequence_prob:
             if layer == 0: continue
@@ -225,27 +246,29 @@ class HMM_script():
                 max_p = 0
                 max_prob_prev_state = "NA"
                 for previous_state in sequence_prob[layer - 1]:
+                    transition = (previous_state, "STOP")
                     p = sequence_prob[layer - 1][previous_state]["p"] * \
-                        transition_dict[previous_state]["stop"]
+                        transition_dict[(transition)]
                     if p > max_p:
                         max_p = p
                         max_prob_prev_state = previous_state
-                sequence_prob[layer]["stop"] = {"p": max_p, "previous": max_prob_prev_state}
+                sequence_prob[layer]["STOP"] = {"p": max_p, "previous": max_prob_prev_state}
                 continue
 
             for current_state in sequence_prob[layer]:
                 max_p = 0
                 max_prob_prev_state = "NA"
                 for previous_state in sequence_prob[layer - 1]:
+                    transition = (previous_state, current_state)
 
 
                     if current_state in emission_dict[observed_sequence[layer - 1]]:
                         p = sequence_prob[layer - 1][previous_state]["p"] * \
-                            transition_dict[previous_state][current_state] * \
+                            transition_dict[(transition)] * \
                             emission_dict[observed_sequence[layer - 1]][current_state]
                     else:
                         p = sequence_prob[layer - 1][previous_state]["p"] * \
-                            transition_dict[previous_state][current_state] * \
+                            transition_dict[(transition)] * \
                             0.0000001
                     if p > max_p:
                         max_p = p
@@ -254,13 +277,12 @@ class HMM_script():
 
         # backtracking to find argmax
         current_layer = n
-        reverse_path = ["stop"]
+        reverse_path = ["STOP"]
         while current_layer >= 0:
             reverse_path.append(sequence_prob[current_layer + 1][reverse_path[len(reverse_path) - 1]]['previous'])
             current_layer -= 1
 
-        self.argmax_tr = reverse_path[::-1][1:len(reverse_path)-1]
-        return self.argmax_tr
+        return reverse_path[::-1][1:len(reverse_path)-1]
 
 
 
@@ -269,9 +291,10 @@ class HMM_script():
 hmm = HMM_script(args)
 # hmm.evaluate_ymax()
 print(hmm.est_transition_params())
+# hmm.save_tr_to_json()
 print("hello")
-print(hmm.viterbi())
-hmm.save_tr_to_json()
+# print(hmm.viterbi())
+print(hmm.test_data)
 # hmm.evaluate_ymax()
 # hmm.save_to_json()
 # print(hmm.est_transition_params())
