@@ -174,8 +174,75 @@ class HMM_script():
     # Report the precision, recall and F scores of all systems
 
     # TODO - implement dictionary to store max and argmax values
+
+    def viterbi(self):
+        
+        observed_sequence = self.test_data
+        states = self.y_vals
+        print(states)
+        transition_dict = self.p_y1_given_y0
+        emission_dict = self.e_x_given_y
+
+        # take from unique states in input data
+        all_states = states[1:len(states)]
+        n = len(observed_sequence)
+
+        # instantiate a nested dictionary to store and update values of sequence probability
+        sequence_prob = {0: {"start": {"p": 1.0, "previous": "NA"}}}
+
+    
     # TODO - write code to update most probable transmission and emission sequence for given sentence
 
+        for i in range(n):
+            sequence_prob[i + 1] = {}
+        for layer in sequence_prob:
+            if layer == 0: continue
+            for state in all_states:
+                sequence_prob[layer][state] = {}
+        sequence_prob[n + 1] = {"stop": {}}
+
+        for layer in sequence_prob:
+            if layer == 0: continue
+
+            if layer == n + 1:
+                max_p = 0
+                max_prob_prev_state = "NA"
+                for previous_state in sequence_prob[layer - 1]:
+                    p = sequence_prob[layer - 1][previous_state]["p"] * \
+                        transition_dict[previous_state]["stop"]
+                    if p > max_p:
+                        max_p = p
+                        max_prob_prev_state = previous_state
+                sequence_prob[layer]["stop"] = {"p": max_p, "previous": max_prob_prev_state}
+                continue
+
+            for current_state in sequence_prob[layer]:
+                max_p = 0
+                max_prob_prev_state = "NA"
+                for previous_state in sequence_prob[layer - 1]:
+
+
+                    if current_state in emission_dict[observed_sequence[layer - 1]]:
+                        p = sequence_prob[layer - 1][previous_state]["p"] * \
+                            transition_dict[previous_state][current_state] * \
+                            emission_dict[observed_sequence[layer - 1]][current_state]
+                    else:
+                        p = sequence_prob[layer - 1][previous_state]["p"] * \
+                            transition_dict[previous_state][current_state] * \
+                            0.0000001
+                    if p > max_p:
+                        max_p = p
+                        max_prob_prev_state = previous_state
+                sequence_prob[layer][current_state] = {"p": max_p, "previous": max_prob_prev_state}
+
+        # backtracking to find argmax
+        current_layer = n
+        reverse_path = ["stop"]
+        while current_layer >= 0:
+            reverse_path.append(sequence_prob[current_layer + 1][reverse_path[len(reverse_path) - 1]]['previous'])
+            current_layer -= 1
+
+        return reverse_path[::-1][1:len(reverse_path)-1]
 
 
 
@@ -184,6 +251,8 @@ class HMM_script():
 hmm = HMM_script(args)
 # hmm.evaluate_ymax()
 print(hmm.est_transition_params())
+print("hello")
+print(hmm.viterbi())
 # print(hmm.test_data)
 # print(hmm.train_data)
 # hmm.est_transition_params()
