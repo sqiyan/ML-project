@@ -12,7 +12,7 @@ class part2:
     Methods:
         1. get_emission_params() - returns dictionary
         2. evaluate_ymax() - writes to file dev.p2.out"""
-        
+
     def __init__(self, test_data, train_data, path):
         self.test_data = test_data
         self.train_data = train_data
@@ -28,12 +28,12 @@ class part2:
         count_y_to_x = {}
         self.e_x_given_y = {}
         for i in range(self.train_data.shape[0]):
-            transition = self.train_data[i,:]
-            transition = tuple(transition)
-            if transition not in count_y_to_x:
-                count_y_to_x[transition] = 1
+            emission = self.train_data[i,:]
+            emission = tuple(emission)
+            if emission not in count_y_to_x:
+                count_y_to_x[emission] = 1
             else:
-                count_y_to_x[transition] += 1
+                count_y_to_x[emission] += 1
         
         for entry in self.y_vals:
             if entry not in(count_y):
