@@ -208,7 +208,7 @@ class HMM_script():
         test_data = self.test_data
         i = 0
         for line in test_data:
-            if input == "\n": # indicates a new sequence
+            if line == "": # indicates a new sequence
                 test_sequences.append([])
                 i += 1
             else:
@@ -229,7 +229,9 @@ class HMM_script():
         # a dictionary 
         emission_dict = json.load(f)
 
-        # take from unique states in input data
+        emission_dict = self.e_x_given_y
+
+        # take unique states in input data
         all_states = states[1:len(states)]
         n = len(input_sequence)
 
@@ -255,7 +257,10 @@ class HMM_script():
                 max_prob_prev_state = "NA"
                 for previous_state in sequence_prob[layer - 1]:
                     transition = (previous_state, "STOP")
-                    p = sequence_prob[layer - 1][previous_state]["p"] * \
+                    if transition not in transition_dict.keys():
+                        p = 0
+                    else:
+                        p = sequence_prob[layer - 1][previous_state]["p"] * \
                         transition_dict[(transition)]
                     if p > max_p:
                         max_p = p
@@ -270,14 +275,18 @@ class HMM_script():
                     transition = (previous_state, current_state)
 
 
-                    if current_state in emission_dict[input_sequence[layer - 1]]:
+                    if (input_sequence[layer - 1], current_state) in emission_dict.keys() and transition in transition_dict.keys():
                         p = sequence_prob[layer - 1][previous_state]["p"] * \
                             transition_dict[(transition)] * \
-                            emission_dict[input_sequence[layer - 1]][current_state]
+                            emission_dict[(input_sequence[layer - 1], current_state)]
+                    elif transition in transition_dict.keys():
+                        p = sequence_prob[layer - 1][previous_state]["p"] * \
+                            transition_dict[(transition)] * \
+                            0
                     else:
                         p = sequence_prob[layer - 1][previous_state]["p"] * \
-                            transition_dict[(transition)] * \
-                            0.0000001
+                            0 * \
+                            0
                     if p > max_p:
                         max_p = p
                         max_prob_prev_state = previous_state
@@ -287,7 +296,12 @@ class HMM_script():
         current_layer = n
         reverse_path = ["STOP"]
         while current_layer >= 0:
-            reverse_path.append(sequence_prob[current_layer + 1][reverse_path[len(reverse_path) - 1]]['previous'])
+            print(sequence_prob)
+            if reverse_path[len(reverse_path) - 1] == "NA":
+                continue
+            reverse_path.append(sequence_prob[current_layer + 1][reverse_path[len(reverse_path) - 1]]["previous"])
+            # just means taking the current state being backtracked
+            # 
             current_layer -= 1
 
         return reverse_path[::-1][1:len(reverse_path)-1]
@@ -295,6 +309,7 @@ class HMM_script():
     def viterbi(self):
         self.format_testdata()
         input_sequences = self.input_sequences
+        # print(input_sequences)
         pred_state_sequence = [[]]
         i = 0
         for input_sequence in input_sequences:
@@ -311,6 +326,7 @@ hmm = HMM_script(args)
 print(hmm.est_transition_params())
 # hmm.save_tr_to_json()
 print("hello")
+# print(hmm.e_x_given_y)
 print(hmm.viterbi())
 print(hmm.test_data)
 # hmm.evaluate_ymax()
