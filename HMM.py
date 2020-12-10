@@ -219,7 +219,6 @@ class HMM_script():
     def mini_viterbi(self, input_sequence):
 
         states = self.states
-        print(states)
         transition_dict = self.p_y1_given_y0
 
         # Opening JSON file 
@@ -264,6 +263,7 @@ class HMM_script():
                         transition_dict[(transition)]
                     if p > max_p:
                         max_p = p
+                        print("updating prev state")
                         max_prob_prev_state = previous_state
                 sequence_prob[layer]["STOP"] = {"p": max_p, "previous": max_prob_prev_state}
                 continue
@@ -282,11 +282,11 @@ class HMM_script():
                     elif transition in transition_dict.keys():
                         p = sequence_prob[layer - 1][previous_state]["p"] * \
                             transition_dict[(transition)] * \
-                            0
+                            0.00000000000001
                     else:
                         p = sequence_prob[layer - 1][previous_state]["p"] * \
-                            0 * \
-                            0
+                            0.00000000000001 * \
+                            0.00000000000001
                     if p > max_p:
                         max_p = p
                         max_prob_prev_state = previous_state
@@ -296,9 +296,6 @@ class HMM_script():
         current_layer = n
         reverse_path = ["STOP"]
         while current_layer >= 0:
-            print(sequence_prob)
-            if reverse_path[len(reverse_path) - 1] == "NA":
-                continue
             reverse_path.append(sequence_prob[current_layer + 1][reverse_path[len(reverse_path) - 1]]["previous"])
             # just means taking the current state being backtracked
             # 
@@ -328,7 +325,7 @@ print(hmm.est_transition_params())
 print("hello")
 # print(hmm.e_x_given_y)
 print(hmm.viterbi())
-print(hmm.test_data)
+# print(hmm.test_data)
 # hmm.evaluate_ymax()
 # hmm.save_to_json()
 # print(hmm.est_transition_params())
