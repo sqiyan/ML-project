@@ -3,7 +3,7 @@ import argparse as ap
 import json
 import pickle
 from part2 import part2
-import part3
+from part3 import part3
 
 parser = ap.ArgumentParser(description='To run HMM on stuff')
 parser.add_argument('--file', default='E',
@@ -67,12 +67,17 @@ class HMM_script():
         f.close()
 
     def part2_emission_params(self):
+        """Returns in the form of a Dictionary, where {(x_val,y_val):probability},"""
         emission_obj = part2(self.test_data, self.train_data, self.path)
         emission_params = emission_obj.get_emission_params()
         self.picklize(emission_params, "em_params")
         if self.action == "eval" and self.part == 2:
             emission_obj.evaluate_ymax()
         return emission_params
+
+    def part3_transition_params(self):
+        """Returns in the form of a Dictionary, where {(prev_y,y):probability},"""
+        # to be filled in
         
     # to convert to pickle format
     def picklize(self, object, name):
@@ -82,22 +87,6 @@ class HMM_script():
     def load_pickle(self, name):
         """Loads pickle with name: 'name + path'. Returns object."""
         return pickle.load(open(name+self.path + ".p","rb"))
-
-    def evaluate_ymax(self):
-        self.ymax_given_x()
-        f = open(self.path + "/dev.p2.out","w", encoding="utf-8")
-        for x in self.test_data:
-            if len(x)<1:
-                f.write("\n")
-            else:
-                try:
-                    y = self.y_max_given_x[x]
-                    f.write("{} {}\n".format(x,y))
-                except:
-                    y = self.y_max_given_x["#UNK#"]
-                    f.write("{} {}\n".format(x,y))
-        f.close()
-        # print(len(self.test_data))
 
     # part 3
     # estimate transition parameters from the training set using MLE 
@@ -260,7 +249,10 @@ class HMM_script():
 
 hmm = HMM_script(args)
 if int(args.part) ==2:
-    hmm.part2_emission_params()
+    print(hmm.part2_emission_params())
+elif int(args.part) ==3:
+    # print(hmm.part3_transition_params())
+    hmm.part3_transition_params()
 else:
     print("add in parts 3 and 4 here")
 print("Part {} complete. {}-ed on {} test set.".format(args.part,args.action,hmm.path))
