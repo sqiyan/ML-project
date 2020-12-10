@@ -1,3 +1,4 @@
+import pickle
 
 class part3:
 
@@ -13,11 +14,12 @@ class part3:
         3. mini_viterbi(input_sequence, emission_dict) - returns predicted state sequence for 1 sentence
         4. viterbi() - returns nested list of predicted state sequence for all sentences within dev-in """
 
-    def __init__(self, states, test_data, train_data, path):
+    def __init__(self, states, test_data, train_data, path, action):
         self.states = states
         self.test_data = test_data
         self.train_data = train_data
         self.path = path
+        self.action = action
 
     # part 3
     # estimate transition parameters from the training set using MLE 
@@ -132,7 +134,7 @@ class part3:
                         transition_dict[(transition)]
                     if p > max_p:
                         max_p = p
-                        print("updating prev state")
+                        # print("updating prev state")
                         max_prob_prev_state = previous_state
                 sequence_prob[layer]["STOP"] = {"p": max_p, "previous": max_prob_prev_state}
                 continue
@@ -143,7 +145,7 @@ class part3:
                 for previous_state in sequence_prob[layer - 1]:
                     transition = (previous_state, current_state)
 
-
+                    # What's this for?
                     if (input_sequence[layer - 1], current_state) in emission_dict.keys() and transition in transition_dict.keys():
                         p = sequence_prob[layer - 1][previous_state]["p"] * \
                             transition_dict[(transition)] * \
@@ -182,6 +184,16 @@ class part3:
         iteratively runs viterbi algortihm for all input sequences,
         returns nested list of predicted state sequence for all sentences within dev-in
         """
+        if self.action == "eval":
+            try:
+                self.tr_params = self.load_pickle("tr_params")
+            except:
+                self.__est_transition_params()
+            try:
+                self.viterbi_seq = self.load_pickle("viterbi")
+                return self.viterbi_seq
+            except:
+                pass
         self.__format_testdata()
         emission_dict = self.em_params
         transition_dict = self.p_y1_given_y0
@@ -196,8 +208,27 @@ class part3:
             i += 1
         pred_state_sequences.pop() # remove last []
         return pred_state_sequences
-    
 
+    def write_sequences(self):
+        """Writes the generated sequences to dev.p3.out"""
+        self.viterbi()
+        f = open(self.path + "/dev.p3.out","w", encoding="utf-8")
+        seq_num = 0
+        word_num = 0
+        for x in self.test_data:
+            if len(x)<1:
+                f.write("\n")
+                word_num = 0
+                seq_num+=1
+            else:
+                y = self.viterbi_seq[seq_num][word_num]
+                f.write("{} {}\n".format(x,y))
+                word_num+=1
+        f.close()
+    
+    def load_pickle(self, name):
+        """Loads pickle with name: 'name + path'. Returns object."""
+        return pickle.load(open(name+self.path + ".p","rb"))
 
 
     

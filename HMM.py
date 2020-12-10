@@ -68,7 +68,7 @@ class HMM_script():
 
     def part2_emission_params(self):
         """Returns in the form of a Dictionary, where {(x_val,y_val):probability},"""
-        emission_obj = part2(self.test_data, self.train_data, self.path)
+        emission_obj = part2(self.test_data, self.train_data, self.path, self.action)
         emission_params = emission_obj.get_emission_params()
         self.picklize(emission_params, "em_params")
         if self.action == "eval" and self.part == 2:
@@ -77,7 +77,7 @@ class HMM_script():
 
     def part3_transition_params(self):
         """Returns in the form of a Dictionary, where {(prev_y,y):probability},"""
-        self.transition_obj = part3(self.states, self.test_data, self.train_data, self.path)
+        self.transition_obj = part3(self.states, self.test_data, self.train_data, self.path, self.action)
         transition_params = self.transition_obj.get_transition_params()
         self.picklize(transition_params, "tr_params")
         return transition_params
@@ -96,16 +96,19 @@ class HMM_script():
         emission_dict = self.part2_emission_params()
         self.transition_obj.set_em_params(emission_dict)
         predicted_sequences = self.transition_obj.viterbi()
+        self.picklize(predicted_sequences,"viterbi")
+        if self.action =="eval":
+            self.transition_obj.write_sequences()
         return predicted_sequences
 
-print("hello")
+# print("hello")
 
 hmm = HMM_script(args)
 if int(args.part) ==2:
     print(hmm.part2_emission_params())
 elif int(args.part) ==3:
-    print(hmm.part3_transition_params())
-    print(hmm.part3_viterbi())
+    hmm.part3_transition_params()
+    hmm.part3_viterbi()
 else:
     print("add in parts 3 and 4 here")
 print("Part {} complete. {}-ed on {} test set.".format(args.part,args.action,hmm.path))
