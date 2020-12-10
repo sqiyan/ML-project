@@ -282,11 +282,11 @@ class HMM_script():
                     elif transition in transition_dict.keys():
                         p = sequence_prob[layer - 1][previous_state]["p"] * \
                             transition_dict[(transition)] * \
-                            0.00000000000001
+                            0.00000000000001 # to allow initial state "NA" to be updated
                     else:
                         p = sequence_prob[layer - 1][previous_state]["p"] * \
                             0.00000000000001 * \
-                            0.00000000000001
+                            0.00000000000001 # to allow initial state "NA" to be updated
                     if p > max_p:
                         max_p = p
                         max_prob_prev_state = previous_state
@@ -297,8 +297,7 @@ class HMM_script():
         reverse_path = ["STOP"]
         while current_layer >= 0:
             reverse_path.append(sequence_prob[current_layer + 1][reverse_path[len(reverse_path) - 1]]["previous"])
-            # just means taking the current state being backtracked
-            # 
+            # just means taking the current state being backtracked, find its most probable previous state as argmax
             current_layer -= 1
 
         return reverse_path[::-1][1:len(reverse_path)-1]
