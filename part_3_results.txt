@@ -13,6 +13,18 @@ Sentiment  recall: 0.8055
 Sentiment  F: 0.8021
 
 
+---CHINESE:---
+#Correct Entity : 180
+Entity  precision: 0.1406
+Entity  recall: 0.2571
+Entity  F: 0.1818
+
+#Correct Sentiment : 115
+Sentiment  precision: 0.0898
+Sentiment  recall: 0.1643
+Sentiment  F: 0.1162
+
+
 ---SINGAPORE:---
 #Entity in gold data: 4301
 #Entity in prediction: 3514
