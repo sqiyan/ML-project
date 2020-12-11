@@ -1,0 +1,42 @@
+---ENGLISH:---
+#Entity in gold data: 13179
+#Entity in prediction: 19103
+
+#Correct Entity : 5547
+Entity  precision: 0.2904
+Entity  recall: 0.4209
+Entity  F: 0.3437
+
+#Correct Sentiment : 1303
+Sentiment  precision: 0.0682
+Sentiment  recall: 0.0989
+Sentiment  F: 0.0807
+
+---CHINESE:---
+#Entity in gold data: 700
+#Entity in prediction: 9512
+
+#Correct Entity : 229
+Entity  precision: 0.0241
+Entity  recall: 0.3271
+Entity  F: 0.0448
+
+#Correct Sentiment : 98
+Sentiment  precision: 0.0103
+Sentiment  recall: 0.1400
+Sentiment  F: 0.0192
+
+---SINGAPORE:---
+
+#Entity in gold data: 4301
+#Entity in prediction: 27013
+
+#Correct Entity : 1714
+Entity  precision: 0.0635
+Entity  recall: 0.3985
+Entity  F: 0.1095
+
+#Correct Sentiment : 1001
+Sentiment  precision: 0.0371
+Sentiment  recall: 0.2327
+Sentiment  F: 0.0639

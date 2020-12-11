@@ -1,9 +1,9 @@
 import numpy as np
 import argparse as ap
-import json
 import pickle
 from part2 import part2
 from part3 import part3
+from part4 import part4
 
 parser = ap.ArgumentParser(description='To run HMM on stuff')
 parser.add_argument('--file', default='E',
@@ -12,6 +12,8 @@ parser.add_argument('--part', default='3', # i changed this to 3, but was initia
                    help='Which part to do. 2, 3, 4, 5')
 parser.add_argument('--action', default='train',
                    help='train or eval')
+parser.add_argument('--top_k', default='3',
+                   help='(for part 4) the kth best sequence')
 
 
 args = parser.parse_args()
@@ -38,6 +40,7 @@ class HMM_script():
             self.path = "EN"
         self.part = int(args.part)
         self.action = args.action
+        self.top_k = int(args.top_k)
         self.open_file()
 
     def open_file(self):
@@ -82,14 +85,6 @@ class HMM_script():
         self.picklize(transition_params, "tr_params")
         return transition_params
         
-    # to convert to pickle format
-    def picklize(self, object, name):
-        """Writes a pickle with name: 'name + path'"""
-        pickle.dump(object, open(name+self.path + ".p","wb"))
-
-    def load_pickle(self, name):
-        """Loads pickle with name: 'name + path'. Returns object."""
-        return pickle.load(open(name+self.path + ".p","rb"))
 
     def part3_viterbi(self):
         transition_dict = self.part3_transition_params()
@@ -101,7 +96,34 @@ class HMM_script():
             self.transition_obj.write_sequences()
         return predicted_sequences
 
-# print("hello")
+    def part4_transition_params(self):
+        """Returns in the form of a Dictionary, where {(prev_y,y):probability},"""
+        self.highest_k = part4(self.states, self.test_data, self.train_data, self.path, self.action, self.top_k)
+        transition_params = self.highest_k.get_transition_params()
+        self.picklize(transition_params, "tr_params")
+        return transition_params
+
+    def part4_viterbi(self):
+        transition_dict = self.part3_transition_params()
+        emission_dict = self.part2_emission_params()
+        # self.highest_k = part4(self.states, self.test_data, self.train_data, self.path, self.action)
+        self.highest_k.set_em_params(emission_dict)
+        predicted_sequences_h = self.highest_k.viterbi()
+        self.picklize(predicted_sequences_h,"viterbi_highest_K")
+        if self.action =="eval":
+            self.highest_k.write_sequences()
+        return predicted_sequences_h
+    
+
+    # to convert to pickle format
+    def picklize(self, object, name):
+        """Writes a pickle with name: 'name + path'"""
+        pickle.dump(object, open(name+self.path + ".p","wb"))
+
+    def load_pickle(self, name):
+        """Loads pickle with name: 'name + path'. Returns object."""
+        return pickle.load(open(name+self.path + ".p","rb"))
+
 
 hmm = HMM_script(args)
 if int(args.part) ==2:
@@ -109,6 +131,9 @@ if int(args.part) ==2:
 elif int(args.part) ==3:
     hmm.part3_transition_params()
     hmm.part3_viterbi()
+elif int(args.part) ==4:
+    hmm.part4_transition_params()
+    hmm.part4_viterbi()
 else:
     print("add in parts 3 and 4 here")
 print("Part {} complete. {}-ed on {} test set.".format(args.part,args.action,hmm.path))
