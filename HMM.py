@@ -4,11 +4,12 @@ import json
 import pickle
 from part2 import part2
 from part3 import part3
+from part5 import part5
 
 parser = ap.ArgumentParser(description='To run HMM on stuff')
 parser.add_argument('--file', default='E',
                    help='Which file to run on. C for chinese, E for english and S for SG')
-parser.add_argument('--part', default='3', # i changed this to 3, but was initially 2
+parser.add_argument('--part', default='5', # i changed this to 5, but was initially 3
                    help='Which part to do. 2, 3, 4, 5')
 parser.add_argument('--action', default='train',
                    help='train or eval')
@@ -101,6 +102,12 @@ class HMM_script():
             self.transition_obj.write_sequences()
         return predicted_sequences
 
+    def part5_smoothparams(self):
+        emission_dict = self.part2_emission_params()
+        smooth_obj = part5(self.states, self.test_data, self.train_data, self.path, self.action)
+        smooth_obj.set_emission_dict(emission_dict)
+        return smooth_obj.get_smooth_emission_params()
+
 # print("hello")
 
 hmm = HMM_script(args)
@@ -108,6 +115,9 @@ if int(args.part) ==2:
     print(hmm.part2_emission_params())
 elif int(args.part) ==3:
     hmm.part3_transition_params()
+    hmm.part3_viterbi()
+elif int(args.part) ==5:
+    hmm.part5_smoothparams()
     hmm.part3_viterbi()
 else:
     print("add in parts 3 and 4 here")
