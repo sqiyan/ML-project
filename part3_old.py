@@ -1,4 +1,3 @@
-from part4 import queue
 import pickle
 
 class part3:
@@ -34,6 +33,8 @@ class part3:
         count_y0_to_y1 = {}
         previous_state = None
         self.p_y1_given_y0 = {}
+        # result = str.split('\n\n')
+        # result = result[:-1]
         
         # for entry in result: 
         for line in self.train_data:
@@ -105,8 +106,7 @@ class part3:
         n = len(input_sequence)
 
         # instantiate a nested dictionary to store and update values of sequence probability
-        # sequence_prob = {0: {"START": {"p": 1.0, "previous": "NA"}}}
-        sequence_prob = {0: {"START": holder(start=True)}}
+        sequence_prob = {0: {"START": {"p": 1.0, "previous": "NA"}}}
 
     
     # update most probable transmission and emission sequence for given sentence
@@ -116,21 +116,27 @@ class part3:
         for layer in sequence_prob:
             if layer == 0: continue
             for state in all_states:
-                sequence_prob[layer][state] = holder()
-        sequence_prob[n + 1] = {"STOP": holder()}
+                sequence_prob[layer][state] = {}
+        sequence_prob[n + 1] = {"STOP": {}}
 
         for layer in sequence_prob:
             if layer == 0: continue
 
             if layer == n + 1:
+                max_p = 0
+                max_prob_prev_state = "NA"
                 for previous_state in sequence_prob[layer - 1]:
                     transition = (previous_state, "STOP")
                     if transition not in transition_dict.keys():
                         p = 0
                     else:
-                        p = sequence_prob[layer - 1][previous_state].get_max_prob() * \
+                        p = sequence_prob[layer - 1][previous_state]["p"] * \
                         transition_dict[(transition)]
-                    sequence_prob[layer]["STOP"].try_add(p,previous_state)
+                    if p > max_p:
+                        max_p = p
+                        # print("updating prev state")
+                        max_prob_prev_state = previous_state
+                sequence_prob[layer]["STOP"] = {"p": max_p, "previous": max_prob_prev_state}
                 continue
 
             for current_state in sequence_prob[layer]:
@@ -139,25 +145,29 @@ class part3:
                 for previous_state in sequence_prob[layer - 1]:
                     transition = (previous_state, current_state)
 
+                    # What's this for?
                     if (input_sequence[layer - 1], current_state) in emission_dict.keys() and transition in transition_dict.keys():
-                        p = sequence_prob[layer - 1][previous_state].get_max_prob() * \
+                        p = sequence_prob[layer - 1][previous_state]["p"] * \
                             transition_dict[(transition)] * \
                             emission_dict[(input_sequence[layer - 1], current_state)]
                     elif transition in transition_dict.keys():
-                        p = sequence_prob[layer - 1][previous_state].get_max_prob() * \
+                        p = sequence_prob[layer - 1][previous_state]["p"] * \
                             transition_dict[(transition)] * \
                             0.00000000000001 # to allow initial state "NA" to be updated
                     else:
-                        p = sequence_prob[layer - 1][previous_state].get_max_prob() * \
+                        p = sequence_prob[layer - 1][previous_state]["p"] * \
                             0.00000000000001 * \
                             0.00000000000001 # to allow initial state "NA" to be updated
-                    sequence_prob[layer][current_state].try_add(p,previous_state)
+                    if p > max_p:
+                        max_p = p
+                        max_prob_prev_state = previous_state
+                sequence_prob[layer][current_state] = {"p": max_p, "previous": max_prob_prev_state}
 
         # backtracking to find argmax
         current_layer = n
         reverse_path = ["STOP"]
         while current_layer >= 0:
-            reverse_path.append(sequence_prob[current_layer + 1][reverse_path[len(reverse_path) - 1]].get_state())
+            reverse_path.append(sequence_prob[current_layer + 1][reverse_path[len(reverse_path) - 1]]["previous"])
             # just means taking the current state being backtracked, find its most probable previous state as argmax
             current_layer -= 1
 
@@ -220,33 +230,6 @@ class part3:
         """Loads pickle with name: 'name + path'. Returns object."""
         return pickle.load(open(name+self.path + ".p","rb"))
 
-class holder:
-    """Class to take in values of probability and state, and decide which are the top ones"""
-    def __init__(self, start = False):
-        """K sets the 'top - k' part of the thing. start = True designates it as a starting node"""
-        if start:
-            self.queue = {"p": 1.0, "previous": "NA"}
-        else:
-            self.queue = {} #inside: {"p":prob,"previous":state}
 
-    def try_add(self,prob,state):
-        if len(self.queue)==0:
-            self.queue['p'] = prob
-            self.queue['previous'] = state
-        elif prob > self.queue['p']:
-            self.queue['p'] = prob
-            self.queue['previous'] = state
-
-    def get_state(self):
-        """Returns the most likely state"""
-        return self.queue["previous"]
-
-    def get_max_prob(self):
-        """Returns the most likely state"""
-        return self.queue["p"]
-
-    def __repr__(self):
-        return str(self.queue)
     
-if __name__ == "__main__":
-    pass
+    
