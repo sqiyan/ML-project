@@ -1,17 +1,19 @@
 import numpy as np
 import argparse as ap
-import json
 import pickle
 from part2 import part2
 from part3 import part3
+from part4 import part4
 
 parser = ap.ArgumentParser(description='To run HMM on stuff')
 parser.add_argument('--file', default='E',
                    help='Which file to run on. C for chinese, E for english and S for SG')
-parser.add_argument('--part', default='2',
+parser.add_argument('--part', default='3', # i changed this to 3, but was initially 2
                    help='Which part to do. 2, 3, 4, 5')
 parser.add_argument('--action', default='train',
                    help='train or eval')
+parser.add_argument('--top_k', default='3',
+                   help='(for part 4) the kth best sequence')
 
 
 args = parser.parse_args()
@@ -38,6 +40,7 @@ class HMM_script():
             self.path = "EN"
         self.part = int(args.part)
         self.action = args.action
+        self.top_k = int(args.top_k)
         self.open_file()
 
     def open_file(self):
@@ -68,7 +71,7 @@ class HMM_script():
 
     def part2_emission_params(self):
         """Returns in the form of a Dictionary, where {(x_val,y_val):probability},"""
-        emission_obj = part2(self.test_data, self.train_data, self.path)
+        emission_obj = part2(self.test_data, self.train_data, self.path, self.action)
         emission_params = emission_obj.get_emission_params()
         self.picklize(emission_params, "em_params")
         if self.action == "eval" and self.part == 2:
@@ -77,8 +80,41 @@ class HMM_script():
 
     def part3_transition_params(self):
         """Returns in the form of a Dictionary, where {(prev_y,y):probability},"""
-        # to be filled in
+        self.transition_obj = part3(self.states, self.test_data, self.train_data, self.path, self.action)
+        transition_params = self.transition_obj.get_transition_params()
+        self.picklize(transition_params, "tr_params")
+        return transition_params
         
+
+    def part3_viterbi(self):
+        transition_dict = self.part3_transition_params()
+        emission_dict = self.part2_emission_params()
+        self.transition_obj.set_em_params(emission_dict)
+        predicted_sequences = self.transition_obj.viterbi()
+        self.picklize(predicted_sequences,"viterbi")
+        if self.action =="eval":
+            self.transition_obj.write_sequences()
+        return predicted_sequences
+
+    def part4_transition_params(self):
+        """Returns in the form of a Dictionary, where {(prev_y,y):probability},"""
+        self.highest_k = part4(self.states, self.test_data, self.train_data, self.path, self.action, self.top_k)
+        transition_params = self.highest_k.get_transition_params()
+        self.picklize(transition_params, "tr_params")
+        return transition_params
+
+    def part4_viterbi(self):
+        transition_dict = self.part3_transition_params()
+        emission_dict = self.part2_emission_params()
+        # self.highest_k = part4(self.states, self.test_data, self.train_data, self.path, self.action)
+        self.highest_k.set_em_params(emission_dict)
+        predicted_sequences_h = self.highest_k.viterbi()
+        self.picklize(predicted_sequences_h,"viterbi_highest_K")
+        if self.action =="eval":
+            self.highest_k.write_sequences()
+        return predicted_sequences_h
+    
+
     # to convert to pickle format
     def picklize(self, object, name):
         """Writes a pickle with name: 'name + path'"""
@@ -88,171 +124,16 @@ class HMM_script():
         """Loads pickle with name: 'name + path'. Returns object."""
         return pickle.load(open(name+self.path + ".p","rb"))
 
-    # part 3
-    # estimate transition parameters from the training set using MLE 
-
-    # count(u,v) Number of times we see a transition from u to v
-    # count(u) Number of times we see the state u in the training set
-
-    def est_transition_params(self):
-        self.est_emission_params()
-        count_y = {}
-        count_y0_to_y1 = {}
-        previous_state = None
-        self.p_y1_given_y0 = {}
-        # result = str.split('\n\n')
-        # result = result[:-1]
-        
-        # for entry in result: 
-        for line in self.train_data:
-            if previous_state == None: 
-                previous_state = "START"
-                state = line[1]
-                transition = (previous_state, state)
-                count_y0_to_y1[(transition)] = count_y0_to_y1[(transition)] + 1 if transition in count_y0_to_y1 else 1
-                count_y["START"] = count_y["START"] + 1 if "START" in count_y else 1
-
-            elif line[1] == "":
-                state = "STOP"
-                transition = (previous_state, state)
-                count_y0_to_y1[(transition)] = count_y0_to_y1[(transition)] + 1 if transition in count_y0_to_y1 else 1
-                previous_state = None
-
-            else:
-                state = line[1]
-                transition = (previous_state, state)
-                count_y0_to_y1[(transition)] = count_y0_to_y1[(transition)] + 1 if transition in count_y0_to_y1 else 1
-                count_y[state] = count_y[state] + 1 if state in count_y else 1
-                previous_state = state
-
-        # y_previous_state = None
-        # for entry in y_vals:
-        #     if previous_state == None:
-        #         entry = "START"
-        #         if entry not in(count_y):
-        #             count_y[entry] = 1
-        #         else:
-        #             count_y[entry] +=1
-        #         previous_state = entry
-        #     elif entry == "":
-        #         entry = "STOP"
-        #         if entry not in(count_y):
-        #             count_y[entry] = 1
-        #         else:
-        #             count_y[entry] +=1
-        #         previous_state = entry
-        #     else:
-        #         if entry not in(count_y):
-        #             count_y[entry] = 1
-        #         else:
-        #             count_y[entry] +=1
-        #         previous_state = entry
-
-        for entry, count in count_y0_to_y1.items():
-            try:
-                self.p_y1_given_y0[entry] = count/count_y[entry[0]]
-            except:
-                self.p_y1_given_y0[entry] = count/count_y[entry[0]]
-
-        self.argmax_tr = self.p_y1_given_y0
-
-        return self.argmax_tr
-
-    # Use the estimated transition and emission parameters, implement the Viterbi algorithm
-    # Report the precision, recall and F scores of all systems
-
-    # TODO - implement dictionary to store max and argmax values
-
-    def format_testdata():
-        test_data = self.test_data
-        
-
-    def viterbi(self):
-        
-        observed_sequence = self.test_data
-
-        states = self.states
-        print(states)
-        transition_dict = self.p_y1_given_y0
-
-        # Opening JSON file 
-        f = open('em_params_EN.json',) 
-        
-        # returns JSON object as  
-        # a dictionary 
-        emission_dict = json.load(f)
-
-        # take from unique states in input data
-        all_states = states[1:len(states)]
-        n = len(observed_sequence)
-
-        # instantiate a nested dictionary to store and update values of sequence probability
-        sequence_prob = {0: {"START": {"p": 1.0, "previous": "NA"}}}
-
-    
-    # TODO - write code to update most probable transmission and emission sequence for given sentence
-
-        for i in range(n):
-            sequence_prob[i + 1] = {}
-        for layer in sequence_prob:
-            if layer == 0: continue
-            for state in all_states:
-                sequence_prob[layer][state] = {}
-        sequence_prob[n + 1] = {"STOP": {}}
-
-        for layer in sequence_prob:
-            if layer == 0: continue
-
-            if layer == n + 1:
-                max_p = 0
-                max_prob_prev_state = "NA"
-                for previous_state in sequence_prob[layer - 1]:
-                    transition = (previous_state, "STOP")
-                    p = sequence_prob[layer - 1][previous_state]["p"] * \
-                        transition_dict[(transition)]
-                    if p > max_p:
-                        max_p = p
-                        max_prob_prev_state = previous_state
-                sequence_prob[layer]["STOP"] = {"p": max_p, "previous": max_prob_prev_state}
-                continue
-
-            for current_state in sequence_prob[layer]:
-                max_p = 0
-                max_prob_prev_state = "NA"
-                for previous_state in sequence_prob[layer - 1]:
-                    transition = (previous_state, current_state)
-
-
-                    if current_state in emission_dict[observed_sequence[layer - 1]]:
-                        p = sequence_prob[layer - 1][previous_state]["p"] * \
-                            transition_dict[(transition)] * \
-                            emission_dict[observed_sequence[layer - 1]][current_state]
-                    else:
-                        p = sequence_prob[layer - 1][previous_state]["p"] * \
-                            transition_dict[(transition)] * \
-                            0.0000001
-                    if p > max_p:
-                        max_p = p
-                        max_prob_prev_state = previous_state
-                sequence_prob[layer][current_state] = {"p": max_p, "previous": max_prob_prev_state}
-
-        # backtracking to find argmax
-        current_layer = n
-        reverse_path = ["STOP"]
-        while current_layer >= 0:
-            reverse_path.append(sequence_prob[current_layer + 1][reverse_path[len(reverse_path) - 1]]['previous'])
-            current_layer -= 1
-
-        return reverse_path[::-1][1:len(reverse_path)-1]
-
-
 
 hmm = HMM_script(args)
 if int(args.part) ==2:
     print(hmm.part2_emission_params())
 elif int(args.part) ==3:
-    # print(hmm.part3_transition_params())
     hmm.part3_transition_params()
+    hmm.part3_viterbi()
+elif int(args.part) ==4:
+    hmm.part4_transition_params()
+    hmm.part4_viterbi()
 else:
     print("add in parts 3 and 4 here")
 print("Part {} complete. {}-ed on {} test set.".format(args.part,args.action,hmm.path))

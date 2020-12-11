@@ -1,7 +1,5 @@
 import pickle
 
-from numpy.lib.npyio import load
-
 class part2:
     """Class to evaluate part 2. 
     Constructor args:
@@ -13,10 +11,11 @@ class part2:
         1. get_emission_params() - returns dictionary
         2. evaluate_ymax() - writes to file dev.p2.out"""
 
-    def __init__(self, test_data, train_data, path):
+    def __init__(self, test_data, train_data, path, action):
         self.test_data = test_data
         self.train_data = train_data
         self.path = path
+        self.action = action
 
     def __est_emission_params(self):
         """generates emission parameters based on training data, saves it as self.e_x_given_y"""
@@ -73,10 +72,15 @@ class part2:
 
     def evaluate_ymax(self):
         """Writes the generated pairs for the dataset to dev.p2.out"""
-        try:
-            self.e_x_given_y = self.load_pickle("em_params")
-            self.__find_y_max_given_x()
-        except:
+        if self.action == "eval":
+            try:
+                self.e_x_given_y = self.load_pickle("em_params")
+                self.__find_y_max_given_x()
+            except:
+                self.__est_emission_params()
+                self.__find_y_max_given_x()
+        else:
+            self.__est_emission_params()
             self.__find_y_max_given_x()
         f = open(self.path + "/dev.p2.out","w", encoding="utf-8")
         for x in self.test_data:
