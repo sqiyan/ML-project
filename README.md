@@ -15,7 +15,8 @@ Arguments:
   --part PART      Which part to do: 2, 3, 4, 5. 
   				 Usage: --part 2
   
-  --action ACTION  train or eval. Train updates the parameters and saves it to  				 a pickle file. Eval will write to dev.{part} in the 					 respective language folders.
+  --action ACTION  train or eval. Train updates the parameters and saves it to a pickle file. 
+  				 Eval will write to dev.{part} in the respective language folders.
   				 Usage: --action train
   				 
 Example: 
