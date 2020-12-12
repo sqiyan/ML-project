@@ -199,10 +199,13 @@ class part3:
         pred_state_sequences.pop() # remove last []
         return pred_state_sequences
 
-    def write_sequences(self):
+    def write_sequences(self, part5 = False):
         """Writes the generated sequences to dev.p3.out"""
         self.viterbi()
-        f = open(self.path + "/dev.p3.out","w", encoding="utf-8")
+        if not part5:
+            f = open(self.path + "/dev.p3.out","w", encoding="utf-8")
+        else:
+            f = open(self.path + "/dev.p5.out","w", encoding="utf-8")
         seq_num = 0
         word_num = 0
         for x in self.test_data:

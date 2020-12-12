@@ -90,11 +90,23 @@ class HMM_script():
     def part3_viterbi(self):
         transition_dict = self.part3_transition_params()
         emission_dict = self.part2_emission_params()
+        # emission_dict = em_params
         self.transition_obj.set_em_params(emission_dict)
         predicted_sequences = self.transition_obj.viterbi()
         self.picklize(predicted_sequences,"viterbi")
         if self.action =="eval":
             self.transition_obj.write_sequences()
+        return predicted_sequences
+   
+    def part5_viterbi(self, em_params):
+        transition_dict = self.part3_transition_params()
+        # emission_dict = self.part2_emission_params()
+        emission_dict = em_params
+        self.transition_obj.set_em_params(emission_dict)
+        predicted_sequences = self.transition_obj.viterbi()
+        self.picklize(predicted_sequences,"viterbi")
+        if self.action =="eval":
+            self.transition_obj.write_sequences(part5=True)
         return predicted_sequences
 
     def part4_transition_params(self):
@@ -138,13 +150,12 @@ if int(args.part) ==2:
     print(hmm.part2_emission_params())
 elif int(args.part) ==3:
     hmm.part3_transition_params()
-    hmm.part3_viterbi()
+    hmm.part3_viterbi(hmm.part2_emission_params())
 elif int(args.part) ==4:
     hmm.part4_transition_params()
     hmm.part4_viterbi()
 elif int(args.part) ==5:
-    hmm.part5_smoothparams()
-    hmm.part3_viterbi()
+    hmm.part5_viterbi(hmm.part5_smoothparams())
 else:
     print("add in parts 3 and 4 here")
 print("Part {} complete. {}-ed on {} test set.".format(args.part,args.action,hmm.path))
