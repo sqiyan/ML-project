@@ -75,6 +75,6 @@ SG:
 ## Part 5
 
 ```
-Lmao ddp things
+An attempt at a better model using smoothing technique
 ```
 
